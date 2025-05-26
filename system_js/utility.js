@@ -1,2 +1,2 @@
-baseurl="http://localhost/cm_international_2/";
+baseurl="http://localhost/CM/";
 // baseurl = "https://cm.hrislkonline.com/";
