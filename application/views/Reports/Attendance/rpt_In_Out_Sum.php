@@ -112,7 +112,10 @@ function convertMinutesToHours($minutes)
     // Return as an array
     return [$hours, $min];
 }
+$i = 0;
+
 foreach ($data_set as $data) {
+    $i++;
     // Convert AfterExH to hours and minutes
     list($hours, $min) = convertMinutesToHours($data->AfterExH);
 
@@ -134,18 +137,18 @@ foreach ($data_set as $data) {
                     <td style="font-size:10px;width:50px;">' . htmlspecialchars($data->DayStatus) . '</td>
                     <td style="font-size:10px;width:60px;">' . htmlspecialchars($data->Day_Type) . '</td>
                     <td style="font-size:10px;width:45px;">' . $hours . ':' . str_pad(abs($min), 2, '0', STR_PAD_LEFT) . '</td>
-                    
                 </tr>';
 }
 $html .= '</tbody>
-                  
           </table>
+          <hr style="font-size: 11px; float: left; border-bottom: solid #000 1px;margin-left:100px;width: 650px;">
         <br>
-
-
-
+            
 
 ';
+$html .= '<div style="font-size:11px; font-weight:bold; text-align:left; margin-top:10px;margin-right:10px;">
+            Total Records: ' . $i . '
+          </div><br>';
 
 // Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
