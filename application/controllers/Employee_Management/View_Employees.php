@@ -45,9 +45,16 @@ class View_Employees extends CI_Controller {
         $gender = $this->input->post("cmb_gender");
         $status = $this->input->post("cmb_status");
         $branch = $this->input->post("cmb_branch");
+        $emp_type = $this->input->post("cmd_emp_type");
 
         if ($status == 2) {
             $status = 0;
+        }
+
+        if($emp_type==1){
+        $emp_type=1;
+        }else if($emp_type==2){
+            $emp_type=2;
         }
 
 
@@ -98,6 +105,16 @@ class View_Employees extends CI_Controller {
                 $filter .= " AND Status = $status";
             }
         }
+
+        
+        if (($this->input->post("cmd_emp_type"))) {
+            if ($filter == '') {
+                $filter = " where EMP_ST_ID = $emp_type";
+            } else {
+                $filter .= " AND EMP_ST_ID = $emp_type";
+            }
+        }
+
 
         if (($this->input->post("cmb_branch"))) {
             if ($filter == null) {

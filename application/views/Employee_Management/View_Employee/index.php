@@ -178,6 +178,20 @@
                                                                     </div>
 
                                                                     <div class="form-group col-sm-3">
+                                                                        <label for="focusedinput" class="col-sm-4 control-label">Emp Type</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control"  id="cmd_emp_type" name="cmd_emp_type" >
+
+                                                                                <option value="" default>-- Select --</option>
+                                                                                <option value="1">Permenant</option>
+                                                                                <option value="2">Casual</option>
+
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
                                                                         <label for="focusedinput" class="col-sm-4 control-label">Gender</label>
                                                                         <div class="col-sm-8">
                                                                             <select class="form-control"  id="cmb_gender" name="cmb_gender" >
@@ -282,6 +296,7 @@
                     $("#txt_nic").val("");
                     $("#cmb_gender").val("");
                     $("#cmb_status").val("");
+                    $("#cmd_emp_type").val("");
 
 
                 });
@@ -308,7 +323,7 @@
 
                 $("#search").click(function () {
                     $('#search_body').html('<center><p><img style="width: 50;height: 50;" src="<?php echo base_url(); ?>assets/images/icon-loading.gif" /></p><center>');
-                    $('#search_body').load("<?php echo base_url(); ?>Employee_Management/View_Employees/search_employee", {'txt_emp': $('#txt_emp').val(), 'txt_emp_name': $('#txt_emp_name').val(), 'cmb_desig': $('#cmb_desig').val(), 'cmb_dep': $('#cmb_dep').val(), 'txt_nic': $('#txt_nic').val(), 'cmb_status': $('#cmb_status').val(), 'cmb_branch': $('#cmb_branch').val(), 'cmb_gender': $('#cmb_gender').val()});
+                    $('#search_body').load("<?php echo base_url(); ?>Employee_Management/View_Employees/search_employee", {'txt_emp': $('#txt_emp').val(), 'txt_emp_name': $('#txt_emp_name').val(), 'cmb_desig': $('#cmb_desig').val(), 'cmb_dep': $('#cmb_dep').val(), 'txt_nic': $('#txt_nic').val(), 'cmb_status': $('#cmb_status').val(),'cmd_emp_type': $('#cmd_emp_type').val(),  'cmb_branch': $('#cmb_branch').val(), 'cmb_gender': $('#cmb_gender').val()});
                 });
 
 
