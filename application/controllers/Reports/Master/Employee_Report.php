@@ -42,10 +42,17 @@ class Employee_Report extends CI_Controller {
         $nic = $this->input->post("txt_nic");
         $gender = $this->input->post("cmb_gender");
         $status = $this->input->post("cmb_status");
+        $emp_type = $this->input->post("cmd_emp_type");
 
         if ($status == 2) {
             $status = 0;
         }
+        if($emp_type==1){
+            $emp_type=1;
+        }else if($emp_type==2){
+            $emp_type=2;
+        }
+
 
 
         // Filter Data by categories
@@ -95,6 +102,15 @@ class Employee_Report extends CI_Controller {
                 $filter .= " AND Status = $status";
             }
         }
+
+         if (($this->input->post("cmd_emp_type"))) {
+            if ($filter == '') {
+                $filter = " where EMP_ST_ID = $emp_type";
+            } else {
+                $filter .= " AND EMP_ST_ID = $emp_type";
+            }
+        }
+
 
         if (($this->input->post("cmb_gender"))) {
             if ($filter == '') {

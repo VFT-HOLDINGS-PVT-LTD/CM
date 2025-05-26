@@ -155,6 +155,21 @@
                                                                         </div>
 
                                                                     </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="focusedinput" class="col-sm-4 control-label">Emp Type</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control"  id="cmd_emp_type" name="cmd_emp_type" >
+
+                                                                                <option value="" default>-- Select --</option>
+                                                                                <option value="1">Permenant</option>
+                                                                                <option value="2">Casual</option>
+
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+
                                                                     </div>
 
                                                                     
@@ -212,6 +227,7 @@
                 $("#txt_nic").val("");
                 $("#cmb_gender").val("");
                 $("#cmb_status").val("");
+                $("#cmd_emp_type").val("");
 
 
             });
