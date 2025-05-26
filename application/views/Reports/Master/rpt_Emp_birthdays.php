@@ -72,9 +72,9 @@ $html = '
                 </thead>
              <tbody>';
 
-
+$i = 0;
 foreach ($data_set as $data) {
-
+    $i++;
 
 
     $html .= ' <tr>
@@ -92,6 +92,9 @@ $html .= '</tbody>
 <br>
 
 ';
+$html .= '<div style="font-size:11px; font-weight:bold; text-align:left; margin-top:10px;margin-right:10px;">
+            Total Records: ' . $i . '
+          </div><br>';
 
 // Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
