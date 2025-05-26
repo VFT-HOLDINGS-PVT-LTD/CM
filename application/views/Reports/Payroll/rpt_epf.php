@@ -95,10 +95,10 @@ $html = '
                     </tr>
                 </thead>
              <tbody>';
-
+$i = 0;
 foreach ($data_set as $data) {
 
-
+    $i++;
     $html .= '<tr>
                         <td  style="font-size:10px;width:60px;">' . $data->EmpNo . '</td>
                         <td  style="font-size:10px;width:150px;">' . $data->Emp_Full_Name . '</td>
@@ -118,6 +118,9 @@ $html .= '</tbody>
         <br>
 
 ';
+$html .= '<div style="font-size:11px; font-weight:bold; text-align:left; margin-top:10px;margin-right:10px;">
+            Total Records: ' . $i . '
+          </div><br>';
 
 
 // Print text using writeHTMLCell()
