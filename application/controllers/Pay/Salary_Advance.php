@@ -436,4 +436,135 @@ class Salary_Advance extends CI_Controller
 
     }
 
+     function uploadDoc()
+    {
+        ////excel file upload
+        $uploadPath = 'assets/uploads/imports/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, TRUE); // FOR CREATING DIRECTORY IF ITS NOT EXIST
+        }
+        $config['upload_path'] = $uploadPath;
+        $config['allowed_types'] = 'csv|xlsx|xls';
+        $config['max_size'] = 1000000;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if ($this->upload->do_upload('upload_excel')) {
+            $fileData = $this->upload->data();
+            $data['file_name'] = $fileData['file_name'];
+            // $this->db->insert('excel_file', $data);
+            // $insert_id = $this->db->insert_id();
+            // $_SESSION['lastid'] = $insert_id;
+            return $fileData['file_name'];
+        } else {
+            return false;
+        }
+    }
+    
+    function upload_salary_advance_report()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            ////call this function heare
+            $upload_status = $this->uploadDoc();
+
+            if ($upload_status != false) {
+                
+                $inputFileName = 'assets/uploads/imports/' . $upload_status;
+                $inputTileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
+                $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputTileType);
+                $spreadsheet = $reader->load($inputFileName);
+                $sheet = $spreadsheet->getSheet(0);
+                $count_Rows = 0;
+
+                // print_r($sheet->getRowIterator());
+                // die;
+
+                $counter = 0;
+                foreach ($sheet->getRowIterator() as $row) {
+                    if ($counter++ == 0) continue;
+                    $id = $spreadsheet->getActiveSheet()->getCell('A' . $row->getRowIndex())->getValue();
+                    $EmpNo = $spreadsheet->getActiveSheet()->getCell('B' . $row->getRowIndex())->getValue();
+                    $Amount = $spreadsheet->getActiveSheet()->getCell('C' . $row->getRowIndex())->getValue();
+                    $Year = $spreadsheet->getActiveSheet()->getCell('D' . $row->getRowIndex())->getValue();
+                    $Month = $spreadsheet->getActiveSheet()->getCell('E' . $row->getRowIndex())->getValue();
+                   
+                    $Is_pending = $spreadsheet->getActiveSheet()->getCell('G' . $row->getRowIndex())->getValue();
+                    $Is_Approve = $spreadsheet->getActiveSheet()->getCell('H' . $row->getRowIndex())->getValue();
+                    $Is_Cancel = $spreadsheet->getActiveSheet()->getCell('I' . $row->getRowIndex())->getValue();
+                    $Approved_by = $spreadsheet->getActiveSheet()->getCell('J' . $row->getRowIndex())->getValue();
+                    
+                    $Is_Sup_AD_APP = $spreadsheet->getActiveSheet()->getCell('L' . $row->getRowIndex())->getValue();
+                    $Sup_AD_APP = $spreadsheet->getActiveSheet()->getCell('M' . $row->getRowIndex())->getValue();
+
+                    $Request_Date = $spreadsheet->getActiveSheet()->getCell('F' . $row->getRowIndex())->getValue();
+                    
+                    // Convert Excel serial date (e.g., "45996") or "12/5/2025" to "Y-m-d" format for Request_Date
+                    if (is_numeric($Request_Date)) {
+                        // Excel serial date to PHP date
+                        $Request_Date = date('Y-m-d', \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($Request_Date));
+                    } elseif (preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $Request_Date)) {
+                        $dateParts = explode('/', $Request_Date);
+                        if (count($dateParts) === 3) {
+                            $Request_Date = sprintf('%04d-%02d-%02d', $dateParts[2], $dateParts[0], $dateParts[1]);
+                        } else {
+                            $Request_Date = '0000-00-00';
+                        }
+                    } else {
+                        $Request_Date = '0000-00-00';
+                    }
+
+                    $Approved_Timestamp = $spreadsheet->getActiveSheet()->getCell('K' . $row->getRowIndex())->getValue();
+                    // Convert Excel serial date or "12/5/2025" to "Y-m-d" format for Approved_Timestamp
+                    if (is_numeric($Approved_Timestamp)) {
+                        $Approved_Timestamp = date('Y-m-d', \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($Approved_Timestamp));
+                    } elseif (preg_match('/^\d{1,2}\/\d{1,2}\/\d{4}$/', $Approved_Timestamp)) {
+                        $dateParts = explode('/', $Approved_Timestamp);
+                        if (count($dateParts) === 3) {
+                            $Approved_Timestamp = sprintf('%04d-%02d-%02d', $dateParts[2], $dateParts[0], $dateParts[1]);
+                        } else {
+                            $Approved_Timestamp = '0000-00-00';
+                        }
+                    } else {
+                        $Approved_Timestamp = '0000-00-00';
+                    }
+                    
+
+                    $data = array(
+                        'id' => $id,
+                        'EmpNo' => $EmpNo,
+                        'Amount' => $Amount,
+                        'Year' => $Year,
+                        'Month' => $Month,
+                        'Request_Date' => $Request_Date,
+                        'Is_pending' => $Is_pending,
+                        'Is_Approve' => $Is_Approve,
+                        'Is_Cancel' => $Is_Cancel,
+                        'Approved_by' => $Approved_by,
+                        'Approved_Timestamp' =>$Approved_Timestamp,
+                        'Is_Sup_AD_APP' => $Is_Sup_AD_APP,
+                        'Sup_AD_APP' => $Sup_AD_APP,
+                    );
+                    // var_dump($data);die;
+
+                    $HasRow = $this->Db_model->getfilteredData("SELECT id FROM tbl_salary_advance WHERE id = '$id' ");
+                    if (!empty($HasRow[0]->id)) {
+                        $this->db->where('id', $HasRow[0]->id);
+                        $this->db->update('tbl_salary_advance', $data);
+                    } else {
+                        $this->db->insert('tbl_salary_advance', $data);
+                    }
+                    $count_Rows++;
+                }
+                $this->session->set_flashdata('success_message', 'Upload Successfully');
+                redirect(base_url() . "Pay/Salary_Advance");
+            } else {
+                $this->session->set_flashdata('error_message', 'Upload Failed');
+                redirect(base_url() . "Pay/Salary_Advance");
+            }
+        } else {
+            $this->session->set_flashdata('error_message', 'Upload Failed');
+            redirect(base_url() . "Pay/Salary_Advance");
+        }
+    }
+
 }

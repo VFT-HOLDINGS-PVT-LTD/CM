@@ -388,7 +388,7 @@
                                                                             <form class="form-horizontal"
                                                                                 id="frm_designation_upload"
                                                                                 name="frm_designation_upload"
-                                                                                action="<?php echo base_url(); ?>Pay/Salary_Increment/upload_salary_increment_report"
+                                                                                action="<?php echo base_url(); ?>Pay/Salary_Advance/upload_salary_advance_report"
                                                                                 method="POST"
                                                                                 enctype="multipart/form-data">
                                                                                 <div class="card">
