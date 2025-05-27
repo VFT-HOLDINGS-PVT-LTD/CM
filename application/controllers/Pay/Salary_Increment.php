@@ -323,4 +323,167 @@ FROM
         echo json_encode(array("status" => TRUE));
     }
 
+    /*
+     * Create excell download report
+     */
+    public function download_salary_increment_report() {
+
+        $data['data_set'] = $this->Db_model->getfilteredData("SELECT
+                                                                SI_ID,
+                                                                EmpNo,
+                                                                Old_Salary,
+                                                                Increment_amount,
+                                                                New_Salary,
+                                                                iYear,
+                                                                iMonth 
+                                                            FROM tbl_salary_increments");
+        //var_dump($data['data_set']);die;
+
+        //create excell sheet
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'F') as $columID) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($columID)->setAutoSize(true);
+        }
+        $sheet->setCellValue('A1', 'SI_ID');
+        $sheet->setCellValue('B1', 'EmpNo');
+        $sheet->setCellValue('C1', 'Old_Salary');
+        $sheet->setCellValue('D1', 'Increment_amount');
+        $sheet->setCellValue('E1', 'New_Salary');
+        $sheet->setCellValue('F1', 'iYear');
+        $sheet->setCellValue('G1', 'iMonth');
+        $sheet->getStyle('A1:G1')->getFont()->setBold(true);
+
+         //check data exists or not
+         if (!empty($data['data_set'])) {
+                
+            $x = 2;
+
+            foreach ($data['data_set'] as $row) {
+
+                //set db value to columns
+                $sheet->setCellValue('A' . $x, $row->SI_ID);
+                $sheet->setCellValue('B' . $x, $row->EmpNo);
+                $sheet->setCellValue('C' . $x, $row->Old_Salary);
+                $sheet->setCellValue('D' . $x, $row->Increment_amount);
+                $sheet->setCellValue('E' . $x, $row->New_Salary);
+                $sheet->setCellValue('F' . $x, $row->iYear);
+                $sheet->setCellValue('G' . $x, $row->iMonth);
+
+                $x++;
+            }
+            
+            
+
+            if (ob_get_contents()) ob_end_clean();
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="salary_increment_table.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+            exit;
+
+        } else {
+            $this->session->set_flashdata('error_message', 'No Data Found.');
+            redirect(base_url() . "Pay/Salary_Increment");
+        }
+
+
+    }
+
+     function uploadDoc()
+    {
+        ////excel file upload
+        $uploadPath = 'assets/uploads/imports/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, TRUE); // FOR CREATING DIRECTORY IF ITS NOT EXIST
+        }
+        $config['upload_path'] = $uploadPath;
+        $config['allowed_types'] = 'csv|xlsx|xls';
+        $config['max_size'] = 1000000;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if ($this->upload->do_upload('upload_excel')) {
+            $fileData = $this->upload->data();
+            $data['file_name'] = $fileData['file_name'];
+            // $this->db->insert('excel_file', $data);
+            // $insert_id = $this->db->insert_id();
+            // $_SESSION['lastid'] = $insert_id;
+            return $fileData['file_name'];
+        } else {
+            return false;
+        }
+    }
+    
+    function upload_salary_increment_report()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            ////call this function heare
+            $upload_status = $this->uploadDoc();
+
+            if ($upload_status != false) {
+                
+                $inputFileName = 'assets/uploads/imports/' . $upload_status;
+                $inputTileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
+                $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputTileType);
+                $spreadsheet = $reader->load($inputFileName);
+                $sheet = $spreadsheet->getSheet(0);
+                $count_Rows = 0;
+
+                // print_r($sheet->getRowIterator());
+                // die;
+
+                $counter = 0;
+                foreach ($sheet->getRowIterator() as $row) {
+                    if ($counter++ == 0) continue;
+                    $SI_ID = $spreadsheet->getActiveSheet()->getCell('A' . $row->getRowIndex())->getValue();
+                    $EmpNo = $spreadsheet->getActiveSheet()->getCell('B' . $row->getRowIndex())->getValue();
+                    $Old_Salary = $spreadsheet->getActiveSheet()->getCell('C' . $row->getRowIndex())->getValue();
+                    $Increment_amount = $spreadsheet->getActiveSheet()->getCell('D' . $row->getRowIndex())->getValue();
+                    $New_Salary = $spreadsheet->getActiveSheet()->getCell('E' . $row->getRowIndex())->getValue();
+                    $iYear = $spreadsheet->getActiveSheet()->getCell('F' . $row->getRowIndex())->getValue();
+                    $iMonth = $spreadsheet->getActiveSheet()->getCell('G' . $row->getRowIndex())->getValue();
+
+                    // echo $formatted_time;
+                    // echo "<br/>";
+                    $data = array(
+                        'SI_ID' => $SI_ID,
+                        'EmpNo' => $EmpNo,
+                        'Old_Salary' => $Old_Salary,
+                        'Increment_amount' => $Increment_amount,
+                        'New_Salary' => $New_Salary,
+                        'iYear' => $iYear,
+                        'iMonth' => $iMonth,
+                    );
+
+                    $HasRow_salary_increment = $this->Db_model->getfilteredData("SELECT tbl_salary_increments.SI_ID FROM tbl_salary_increments WHERE
+                                                                tbl_salary_increments.SI_ID = '$SI_ID' ");
+                    if (!empty($HasRow_salary_increment[0]->SI_ID)) {
+                        // echo "Already Exist";
+                        $this->db->where('SI_ID', $HasRow_salary_increment[0]->SI_ID);
+                        $this->db->update('tbl_salary_increments', $data);
+                    } else {
+                        // echo "Not Exist";
+                        $this->db->insert('tbl_salary_increments', $data);
+                    }
+                    // $this->db->insert('client', $data);
+                    $count_Rows++;
+                    // echo json_encode($data);
+                    // echo "<br/>";
+                }
+                $this->session->set_flashdata('success_message', 'Upload Successfully');
+                redirect(base_url() . "Pay/Salary_Increment");
+            } else {
+                $this->session->set_flashdata('error_message', 'Upload Failed');
+                 redirect(base_url() . "Pay/Salary_Increment");
+            }
+        } else {
+            $this->session->set_flashdata('error_message', 'Upload Failed');
+            redirect(base_url() . "Pay/Salary_Increment");
+        }
+    }
+
+
 }

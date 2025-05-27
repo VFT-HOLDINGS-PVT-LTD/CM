@@ -435,7 +435,7 @@
                                                                             <form class="form-horizontal"
                                                                                 id="frm_designation_download"
                                                                                 name="frm_designation_download"
-                                                                                action="<?php echo base_url(); ?>Master/Designation/download_designation_report"
+                                                                                action="<?php echo base_url(); ?>Pay/Salary_Increment/download_salary_increment_report"
                                                                                 method="POST">
                                                                                 <div class="card">
                                                                                     <div class="card-body">
@@ -463,7 +463,7 @@
                                                                             <form class="form-horizontal"
                                                                                 id="frm_designation_upload"
                                                                                 name="frm_designation_upload"
-                                                                                action="<?php echo base_url(); ?>Master/Designation/upload_designation_report"
+                                                                                action="<?php echo base_url(); ?>Pay/Salary_Increment/upload_salary_increment_report"
                                                                                 method="POST"
                                                                                 enctype="multipart/form-data">
                                                                                 <div class="card">
