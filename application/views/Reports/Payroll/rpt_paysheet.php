@@ -102,6 +102,8 @@ $html = '
 <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">Year: ' . $data_year . ' &nbsp; Month: ' . date('F', mktime(0, 0, 0, $data_month)) . '</div><br>';
 
 $chunks = array_chunk($data_set, 13);
+$grandTotalBalance = 0;
+$grandTotalRecords = 0;
 
 foreach ($chunks as $index => $chunk) {
     $html .= '<table cellpadding="3">
@@ -160,6 +162,10 @@ foreach ($chunks as $index => $chunk) {
         $Mint = $data->Normal_OT_Hrs;
                         $hours = floor($Mint / 60);
                         $min = $Mint - ($hours * 60);
+                        
+        $grandTotalBalance += $data->Net_salary;
+        $grandTotalRecords++;
+
         $html .= '<tr>
             <td style="width:50px;">' . $data->EmpNo . '</td>                      
             <td style="width:150px;">' . $data->Emp_Full_Name . '</td>                       
@@ -217,6 +223,23 @@ foreach ($chunks as $index => $chunk) {
 }
 
 $html .= '</div>';
+$html .= '
+    <hr style="border: none; border-top: 1px solid #000; width: 700px; margin: 10px 0 10px 100px;">
+
+    <table style="width:700px; margin-left:100px;">
+        <tr>
+            <td style="font-size:11px; font-weight:bold; text-align:right; padding:8px 0;">
+                Grand Total Balance: ' . number_format($grandTotalBalance, 2, '.', ',') . '
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:11px; font-weight:bold; text-align:left; padding:2px 0;">
+                Grand Total Records: ' . $grandTotalRecords . '
+            </td>
+        </tr>
+    </table>
+    <br>
+';
 
 
 // Print text using writeHTMLCell()
