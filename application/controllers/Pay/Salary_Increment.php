@@ -1,6 +1,13 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class Salary_Increment extends CI_Controller {
 
@@ -13,6 +20,7 @@ class Salary_Increment extends CI_Controller {
          * Load Database model
          */
         $this->load->model('Db_model', '', TRUE);
+        $this->load->library("pdf_library");
     }
 
     /*

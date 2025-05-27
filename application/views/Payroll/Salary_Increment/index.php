@@ -3,7 +3,7 @@
 
 <!--Description of dashboard page
 
-@author Ashan Rathsara-->
+@authorAshan Rathsara-->
 
 
 <html lang="en">
@@ -12,8 +12,8 @@
 
 <head>
     <!-- Styles -->
-    <?php $this->load->view('template/css.php'); ?>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<?php $this->load->view('template/css.php'); ?>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 
 
 
@@ -52,6 +52,7 @@
 
                                 <li class="active"><a data-toggle="tab" href="#tab1">SALARY INCREMENT</a></li>
                                 <li><a data-toggle="tab" href="#tab2">VIEW SALARY INCREMENT</a></li>
+                                <li><a data-toggle="tab" href="#tab3">DOWNLOADS</a></li>
 
                             </ul>
                         </div>
@@ -72,25 +73,33 @@
                                                             <h2>ADD SALARY INCREMENT</h2>
                                                         </div>
                                                         <div class="panel-body">
-                                                            <form class="form-horizontal" id="frm_variable_allowances" name="frm_variable_allowances" action="<?php echo base_url(); ?>Pay/Salary_Increment/insert_data" method="POST">
+                                                            <form class="form-horizontal" id="frm_variable_allowances"
+                                                                name="frm_variable_allowances"
+                                                                action="<?php echo base_url(); ?>Pay/Salary_Increment/insert_data"
+                                                                method="POST">
 
                                                                 <!--success Message-->
                                                                 <?php if (isset($_SESSION['success_message']) && $_SESSION['success_message'] != '') { ?>
-                                                                    <div id="spnmessage" class="alert alert-dismissable alert-success success_redirect">
-                                                                        <strong>Success !</strong> <?php echo $_SESSION['success_message'] ?>
-                                                                    </div>
+                                                                <div id="spnmessage"
+                                                                    class="alert alert-dismissable alert-success success_redirect">
+                                                                    <strong>Success !</strong>
+                                                                    <?php echo $_SESSION['success_message'] ?>
+                                                                </div>
                                                                 <?php } ?>
 
                                                                 <!--Error Message-->
                                                                 <?php if (isset($_SESSION['error_message']) && $_SESSION['error_message'] != '') { ?>
-                                                                    <div id="spnmessage" class="alert alert-dismissable alert-danger error_redirect">
-                                                                        <strong>Error !</strong> <?php echo $_SESSION['error_message'] ?>
-                                                                    </div>
+                                                                <div id="spnmessage"
+                                                                    class="alert alert-dismissable alert-danger error_redirect">
+                                                                    <strong>Error !</strong>
+                                                                    <?php echo $_SESSION['error_message'] ?>
+                                                                </div>
                                                                 <?php } ?>
 
                                                                 <div class="form-group col-sm-12">
                                                                     <div class="col-sm-8">
-                                                                        <img style="margin-left: 30%; width: 100px; height: 100px;" src="<?php echo base_url(); ?>assets/images/increase_9108267.png">
+                                                                        <img style="margin-left: 30%; width: 100px; height: 100px;"
+                                                                            src="<?php echo base_url(); ?>assets/images/increase_9108267.png">
                                                                     </div>
                                                                 </div>
 
@@ -140,9 +149,12 @@
 
 
                                                                 <div class="form-group col-sm-6">
-                                                                    <label for="focusedinput" class="col-sm-4 control-label">Amount</label>
+                                                                    <label for="focusedinput"
+                                                                        class="col-sm-4 control-label">Amount</label>
                                                                     <div class="col-sm-8">
-                                                                        <input type="number" class="form-control" required="required" id="txt_amount" name="txt_amount" placeholder="Ex: 1500">
+                                                                        <input type="number" class="form-control"
+                                                                            required="required" id="txt_amount"
+                                                                            name="txt_amount" placeholder="Ex: 1500">
                                                                     </div>
                                                                 </div>
 
@@ -170,9 +182,11 @@
                                                                     </div>-->
 
                                                                 <div class="form-group col-sm-6">
-                                                                    <label for="focusedinput" class="col-sm-4 control-label">Month</label>
+                                                                    <label for="focusedinput"
+                                                                        class="col-sm-4 control-label">Month</label>
                                                                     <div class="col-sm-8">
-                                                                        <select required="" class="form-control" id="cmb_month" name="cmb_month">
+                                                                        <select required="" class="form-control"
+                                                                            id="cmb_month" name="cmb_month">
                                                                             <option value="">--Select Month--</option>
                                                                             <option value="1">January</option>
                                                                             <option value="2">February</option>
@@ -229,32 +243,42 @@
                                                 </div>
                                                 <div class="panel-body">
 
-                                                    <form class="form-horizontal" id="frm_in_out_rpt" name="frm_in_out_rpt" method="POST">
+                                                    <form class="form-horizontal" id="frm_in_out_rpt"
+                                                        name="frm_in_out_rpt" method="POST">
 
 
                                                         <div class="form-group col-md-12">
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Emp No</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Emp No</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="txt_emp" id="txt_emp" placeholder="Ex: 0001">
+                                                                    <input type="text" class="form-control"
+                                                                        name="txt_emp" id="txt_emp"
+                                                                        placeholder="Ex: 0001">
                                                                 </div>
 
                                                             </div>
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Emp Name</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Emp Name</label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="txt_emp_name" id="txt_emp_name" placeholder="Ex: Ashan">
+                                                                    <input type="text" class="form-control"
+                                                                        name="txt_emp_name" id="txt_emp_name"
+                                                                        placeholder="Ex: Ashan">
                                                                 </div>
 
                                                             </div>
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Designation</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Designation</label>
                                                                 <div class="col-sm-8">
-                                                                    <select class="form-control" id="cmb_desig" name="cmb_desig">
+                                                                    <select class="form-control" id="cmb_desig"
+                                                                        name="cmb_desig">
 
                                                                         <option value="" default>-- Select --</option>
                                                                         <?php foreach ($data_desig as $t_data) { ?>
-                                                                            <option value="<?php echo $t_data->Des_ID; ?>"><?php echo $t_data->Desig_Name; ?></option>
+                                                                        <option value="<?php echo $t_data->Des_ID; ?>">
+                                                                            <?php echo $t_data->Desig_Name; ?></option>
 
                                                                         <?php }
                                                                         ?>
@@ -264,14 +288,17 @@
 
                                                             </div>
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Department</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Department</label>
                                                                 <div class="col-sm-8">
-                                                                    <select class="form-control" id="cmb_dep" name="cmb_dep">
+                                                                    <select class="form-control" id="cmb_dep"
+                                                                        name="cmb_dep">
 
 
                                                                         <option value="" default>-- Select --</option>
                                                                         <?php foreach ($data_dep as $t_data) { ?>
-                                                                            <option value="<?php echo $t_data->Dep_ID; ?>"><?php echo $t_data->Dep_Name; ?></option>
+                                                                        <option value="<?php echo $t_data->Dep_ID; ?>">
+                                                                            <?php echo $t_data->Dep_Name; ?></option>
 
                                                                         <?php }
                                                                         ?>
@@ -287,14 +314,18 @@
                                                         <div class="form-group col-md-12">
 
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Group</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Group</label>
                                                                 <div class="col-sm-8">
-                                                                    <select class="form-control" id="cmb_grp" name="cmb_grp">
+                                                                    <select class="form-control" id="cmb_grp"
+                                                                        name="cmb_grp">
 
 
                                                                         <option value="" default>-- Select --</option>
                                                                         <?php foreach ($data_group as $t_data) { ?>
-                                                                            <option value="<?php echo $t_data->Grp_ID; ?>"><?php echo $t_data->EmpGroupName; ?></option>
+                                                                        <option value="<?php echo $t_data->Grp_ID; ?>">
+                                                                            <?php echo $t_data->EmpGroupName; ?>
+                                                                        </option>
 
                                                                         <?php }
                                                                         ?>
@@ -304,9 +335,11 @@
 
                                                             </div>
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Year</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Year</label>
                                                                 <div class="col-sm-8">
-                                                                    <select required="" class="form-control" id="cmb_years" name="cmb_years">
+                                                                    <select required="" class="form-control"
+                                                                        id="cmb_years" name="cmb_years">
                                                                         <option value="" default>-- Select --</option>
 
                                                                         <option value="2023">2023</option>
@@ -325,9 +358,11 @@
 
 
                                                             <div class="form-group col-sm-3">
-                                                                <label for="focusedinput" class="col-sm-4 control-label">Month</label>
+                                                                <label for="focusedinput"
+                                                                    class="col-sm-4 control-label">Month</label>
                                                                 <div class="col-sm-8">
-                                                                    <select class="form-control" id="cmb_months" name="cmb_months">
+                                                                    <select class="form-control" id="cmb_months"
+                                                                        name="cmb_months">
                                                                         <option value=""></option>
                                                                         <option value="1">January</option>
                                                                         <option value="2">February</option>
@@ -349,8 +384,12 @@
                                                         </div>
 
                                                         <div class="col-sm-6">
-                                                            <input type="button" id="search" name="search" class="btn-green btn fa fa-check" value="&nbsp;&nbsp;VIEW&nbsp; REPORT">
-                                                            <input type="button" id="cancel" name="cancel" class="btn-danger-alt btn fa fa-check" value="&nbsp;&nbsp;CLEAR">
+                                                            <input type="button" id="search" name="search"
+                                                                class="btn-green btn fa fa-check"
+                                                                value="&nbsp;&nbsp;VIEW&nbsp; REPORT">
+                                                            <input type="button" id="cancel" name="cancel"
+                                                                class="btn-danger-alt btn fa fa-check"
+                                                                value="&nbsp;&nbsp;CLEAR">
                                                         </div>
                                                     </form>
                                                     <hr>
@@ -363,6 +402,112 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+
+                                <div class="tab-pane" id="tab3">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">
+                                                            <h2>DOWNLOADS</h2>
+                                                        </div>
+                                                        <div class="panel-body">
+
+                                                            <div class="row">
+
+                                                                <div class="container mt-4">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 mb-12">
+                                                                            <div class="alert alert-info" role="alert">
+                                                                                Use the options below to add or update
+                                                                                Designation details via an Excel
+                                                                                sheet.
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- Download Section -->
+                                                                        <div class="col-md-6 mb-4">
+                                                                            <form class="form-horizontal"
+                                                                                id="frm_designation_download"
+                                                                                name="frm_designation_download"
+                                                                                action="<?php echo base_url(); ?>Master/Designation/download_designation_report"
+                                                                                method="POST">
+                                                                                <div class="card">
+                                                                                    <div class="card-body">
+                                                                                        <h5 class="card-title">Download
+                                                                                            Excel File</h5>
+                                                                                        <p
+                                                                                            class="text-muted small mb-2">
+                                                                                            (Downloaded Format: .xlsx
+                                                                                            )</p>
+                                                                                        <button type="submit"
+                                                                                            name="search"
+                                                                                            formtarget="_blank"
+                                                                                            class="btn btn-success">
+                                                                                            <i
+                                                                                                class="fa fa-download"></i>
+                                                                                            Download
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+
+                                                                        <!-- Upload Section -->
+                                                                        <div class="col-md-6 mb-4">
+                                                                            <form class="form-horizontal"
+                                                                                id="frm_designation_upload"
+                                                                                name="frm_designation_upload"
+                                                                                action="<?php echo base_url(); ?>Master/Designation/upload_designation_report"
+                                                                                method="POST"
+                                                                                enctype="multipart/form-data">
+                                                                                <div class="card">
+                                                                                    <div class="card-body">
+                                                                                        <h5 class="card-title">Upload
+                                                                                            Excel File</h5>
+                                                                                        <p
+                                                                                            class="text-muted small mb-2">
+                                                                                            (Select Excel File: .xlsx
+                                                                                            only)</p>
+                                                                                        <div class="custom-file mb-2">
+                                                                                            <input type="file"
+                                                                                                class="custom-file-input"
+                                                                                                id="upload_excel"
+                                                                                                name="upload_excel"
+                                                                                                accept=".xlsx" required>
+
+                                                                                        </div>
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-primary"
+                                                                                            style="margin-top: 10px;">
+                                                                                            <i class="fa fa-upload"></i>
+                                                                                            Upload
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
 
                                 </div>
 
@@ -389,8 +534,8 @@
 
         <!--Dropdown selected text into label-->
         <script type="text/javascript">
-            $(function() {
-                $("#cmb_cat").on("change", function() {
+            $(function () {
+                $("#cmb_cat").on("change", function () {
                     $("#change").text($("#cmb_cat").find(":selected").text());
                 }).trigger("change");
             });
@@ -408,7 +553,7 @@
 
 
                     },
-                    function(data) {
+                    function (data) {
                         //                            alert(data);
 
                         //                            $('#cmb_cat2').remove();
@@ -425,7 +570,7 @@
                 "todayHighlight": true,
                 autoclose: true,
                 format: 'yyyy/mm/dd'
-            }).on('changeDate', function(ev) {
+            }).on('changeDate', function (ev) {
                 $(this).datepicker('hide');
             });
             $('#dpd2').datepicker({
@@ -433,14 +578,14 @@
                 "todayHighlight": true,
                 autoclose: true,
                 format: 'yyyy/mm/dd'
-            }).on('changeDate', function(ev) {
+            }).on('changeDate', function (ev) {
                 $(this).datepicker('hide');
             });
         </script>
 
         <!--JQuary Validation-->
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#frm_variable_allowances").validate();
                 $("#spnmessage").hide("shake", {
                     times: 6
@@ -451,13 +596,13 @@
 
         <!--Auto complete-->
         <script type="text/javascript">
-            $(function() {
+            $(function () {
                 $("#txt_emp_name").autocomplete({
                     source: "<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out/get_auto_emp_name"
                 });
             });
 
-            $(function() {
+            $(function () {
                 $("#txt_emp").autocomplete({
                     source: "<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out/get_auto_emp_no"
                 });
@@ -466,7 +611,7 @@
 
 
         <script>
-            $(function() {
+            $(function () {
                 $('#from_date').datepicker({
                     "setDate": new Date(),
                     "autoclose": true,
@@ -485,8 +630,10 @@
             $("#success_message_my").hide("bounce", 2000, 'fast');
 
 
-            $("#search").click(function() {
-                $('#search_body').html('<center><p><img style="width: 50;height: 50;" src="<?php echo base_url(); ?>assets/images/icon-loading.gif" /></p><center>');
+            $("#search").click(function () {
+                $('#search_body').html(
+                    '<center><p><img style="width: 50;height: 50;" src="<?php echo base_url(); ?>assets/images/icon-loading.gif" /></p><center>'
+                    );
                 $('#search_body').load("<?php echo base_url(); ?>Pay/Salary_Increment/getAllIncrements", {
                     'txt_emp': $('#txt_emp').val(),
                     'txt_emp_name': $('#txt_emp_name').val(),
@@ -501,7 +648,7 @@
 
         <!--Clear Text Boxes-->
         <script type="text/javascript">
-            $("#cancel").click(function() {
+            $("#cancel").click(function () {
 
                 $("#txt_emp").val("");
                 $("#txt_emp_name").val("");
@@ -517,14 +664,14 @@
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('.itemName').select2({
                     placeholder: '--- Find ---',
                     ajax: {
                         url: "<?php echo base_url(); ?>Leave_Transaction/Leave_Entry/search",
                         dataType: 'json',
                         delay: 250,
-                        processResults: function(data) {
+                        processResults: function (data) {
                             return {
                                 results: data
                             };
@@ -533,14 +680,15 @@
                     }
                 });
 
-                $('#txt_nic').on('change', function() {
+                $('#txt_nic').on('change', function () {
                     var empNo = $(this).val();
                     if (empNo) {
                         $.ajax({
-                            url: '<?php echo base_url(); ?>Leave_Transaction/Leave_Entry/get_mem_data/' + empNo,
+                            url: '<?php echo base_url(); ?>Leave_Transaction/Leave_Entry/get_mem_data/' +
+                                empNo,
                             type: "GET",
                             dataType: "json",
-                            success: function(data) {
+                            success: function (data) {
                                 if (data.length > 0) {
                                     $('#txt_emp_name').val(data[0].Emp_Full_Name);
                                 }
@@ -549,7 +697,7 @@
                     }
                 });
 
-                $('#cmb_cat').on('change', function() {
+                $('#cmb_cat').on('change', function () {
                     var selectedValue = $(this).val();
                     var dynamicFields = $('#dynamic-fields');
                     dynamicFields.empty();
@@ -577,7 +725,7 @@
                                 url: "<?php echo base_url(); ?>Leave_Transaction/Leave_Entry/search",
                                 dataType: 'json',
                                 delay: 250,
-                                processResults: function(data) {
+                                processResults: function (data) {
                                     return {
                                         results: data
                                     };
@@ -586,16 +734,18 @@
                             }
                         });
 
-                        $('#txt_nic').on('change', function() {
+                        $('#txt_nic').on('change', function () {
                             var empNo = $(this).val();
                             if (empNo) {
                                 $.ajax({
-                                    url: '<?php echo base_url(); ?>Leave_Transaction/Leave_Entry/get_mem_data/' + empNo,
+                                    url: '<?php echo base_url(); ?>Leave_Transaction/Leave_Entry/get_mem_data/' +
+                                        empNo,
                                     type: "GET",
                                     dataType: "json",
-                                    success: function(data) {
+                                    success: function (data) {
                                         if (data.length > 0) {
-                                            $('#txt_emp_name').val(data[0].Emp_Full_Name);
+                                            $('#txt_emp_name').val(data[0]
+                                                .Emp_Full_Name);
                                         }
                                     }
                                 });
@@ -614,7 +764,7 @@
 
                         $.post('<?php echo base_url(); ?>index.php/Pay/Allowance/dropdown/', {
                             cmb_cat: selectedValue
-                        }, function(data) {
+                        }, function (data) {
                             $('#cmb_cat2').html(data);
                         });
                     }
