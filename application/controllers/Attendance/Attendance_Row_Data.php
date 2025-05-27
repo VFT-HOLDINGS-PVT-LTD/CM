@@ -20,26 +20,27 @@ class Attendance_Row_Data extends CI_Controller {
      */
 
     public function index() {
-
+        
         $data['title'] = "Attendance Row Data | HRM System";
         $data['data_set'] = $this->Db_model->getfilteredData('SELECT 
-    EventID,
-    Emp_Full_Name,
-    tbl_u_attendancedata.Enroll_No, 
-    AttDate, 
-    MIN(AttTime) AS InTime, 
-    MAX(AttTime) AS OutTime 
-FROM 
-    tbl_u_attendancedata
-LEFT OUTER JOIN 
-    tbl_empmaster
-ON 
-    tbl_empmaster.EmpNo = tbl_u_attendancedata.Enroll_No
-GROUP BY 
-    tbl_u_attendancedata.Enroll_No, AttDate
-ORDER BY 
-    AttDate ASC;
-');
+        EventID,
+        Emp_Full_Name,
+        tbl_u_attendancedata.Enroll_No, 
+        AttDate, 
+        MIN(AttTime) AS InTime, 
+        MAX(AttTime) AS OutTime 
+        FROM 
+            tbl_u_attendancedata
+        LEFT OUTER JOIN 
+            tbl_empmaster
+        ON 
+            tbl_empmaster.EmpNo = tbl_u_attendancedata.Enroll_No
+        GROUP BY 
+            tbl_u_attendancedata.Enroll_No, AttDate
+        ORDER BY 
+            AttDate DESC
+        ');
+        
         $this->load->view('Attendance/Attendance_Row_Data/index', $data);
     }
 
