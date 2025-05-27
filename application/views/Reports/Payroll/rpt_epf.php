@@ -79,48 +79,67 @@ if(!empty($month)){
     }
 }
 $html = '
-        <div style="margin-left:200px; text-align:center; font-size:13px;">EPF REPORT</div> 
-        <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">Year : '.$year." ".$month_des.'</div></font><br>
-            <table cellpadding="3">
-                <thead style="border-bottom: #000 solid 1px;">
-                    <tr style="border-bottom: 1px solid black;"> 
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:60px;">EMP NO</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:150px;">NAME</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:50px;">EPF NO</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:80px;">NIC NO</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:80px;">TOT FOR EPF</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:80px;">Employee Contribution (8%)</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:90px;">Employer Contribution (12%)</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:90px;">Total Contribution (20%)</th>     
-                    </tr>
-                </thead>
-             <tbody>';
+    <div style="margin-left:200px; text-align:center; font-size:13px;">EPF REPORT</div> 
+    <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">Year : '.$year." ".$month_des.'</div></font><br>
+        <table cellpadding="3">
+        <thead style="border-bottom: #000 solid 1px;">
+            <tr style="border-bottom: 1px solid black;"> 
+            <th style="font-size:11px;border-bottom: 1px solid black;width:60px;">EMP NO</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:150px;">NAME</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:50px;">EPF NO</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:80px;">NIC NO</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:80px;">TOT FOR EPF</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:80px;">Employee Contribution (8%)</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:90px;">Employer Contribution (12%)</th>
+            <th style="font-size:11px;border-bottom: 1px solid black;width:90px;">Total Contribution (20%)</th>     
+            </tr>
+        </thead>
+         <tbody>';
+         
 $i = 0;
+$sum_total_f_epf = 0;
+$sum_worker_amount = 0;
+$sum_employee_amount = 0;
+$sum_total_contribution = 0;
+
 foreach ($data_set as $data) {
-
     $i++;
+    $total_contribution = $data->Total_EPF_Worker_Amount + $data->Total_EPF_Employee_Amount;
+
+    $sum_total_f_epf += $data->Total_F_Epf;
+    $sum_worker_amount += $data->Total_EPF_Worker_Amount;
+    $sum_employee_amount += $data->Total_EPF_Employee_Amount;
+    $sum_total_contribution += $total_contribution;
+
     $html .= '<tr>
-                        <td  style="font-size:10px;width:60px;">' . $data->EmpNo . '</td>
-                        <td  style="font-size:10px;width:150px;">' . $data->Emp_Full_Name . '</td>
-                        <td  style="font-size:10px;width:50px;">' . $data->EPFNO . '</td>
-                        <td  style="font-size:10px;width:80px;">' . $data->NIC . '</td>
-                        <td style="font-size:10px;width:80px;">' . number_format($data->Total_F_Epf, 2, '.', ',') . '</td> 
-                        <td  style="font-size:10px;width:80px;">' . number_format($data->Total_EPF_Worker_Amount, 2, '.', ',') . '</td>
-                        <td  style="font-size:10px;width:90px;">' . number_format($data->Total_EPF_Employee_Amount, 2, '.', ',') . '</td>
-                        <td style="font-size:10px;width:90px;">' . number_format($data->Total_EPF_Worker_Amount + $data->Total_EPF_Employee_Amount, 2, '.', ',') . '</td>    
-                    </tr>'
-
-    ;
+            <td  style="font-size:10px;width:60px;">' . $data->EmpNo . '</td>
+            <td  style="font-size:10px;width:150px;">' . $data->Emp_Full_Name . '</td>
+            <td  style="font-size:10px;width:50px;">' . $data->EPFNO . '</td>
+            <td  style="font-size:10px;width:80px;">' . $data->NIC . '</td>
+            <td style="font-size:10px;width:80px;">' . number_format($data->Total_F_Epf, 2, '.', ',') . '</td> 
+            <td  style="font-size:10px;width:80px;">' . number_format($data->Total_EPF_Worker_Amount, 2, '.', ',') . '</td>
+            <td  style="font-size:10px;width:90px;">' . number_format($data->Total_EPF_Employee_Amount, 2, '.', ',') . '</td>
+            <td style="font-size:10px;width:90px;">' . number_format($total_contribution, 2, '.', ',') . '</td>    
+            </tr>';
 }
-$html .= '</tbody>
-                  
-          </table>
-        <br>
 
+// Add sum row
+$html .= '<tr>
+        <td colspan="4" style="font-size:11px; font-weight:bold; text-align:right; border-top:1px solid #000;text-align:left">Total</td>
+        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_total_f_epf, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_worker_amount, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_employee_amount, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_total_contribution, 2, '.', ',') . '</td>
+    </tr>';
+
+$html .= '</tbody>
+      </table>
+    <br>
 ';
+
 $html .= '<div style="font-size:11px; font-weight:bold; text-align:left; margin-top:10px;margin-right:10px;">
-            Total Records: ' . $i . '
-          </div><br>';
+        Total Records: ' . $i . '
+      </div><br>';
 
 
 // Print text using writeHTMLCell()
