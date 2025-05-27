@@ -113,6 +113,7 @@ function convertMinutesToHours($minutes)
     return [$hours, $min];
 }
 $i = 0;
+$Total_OT= 0;
 
 foreach ($data_set as $data) {
     $i++;
@@ -124,6 +125,8 @@ foreach ($data_set as $data) {
 
     // Convert DOT to hours and minutes
     list($dothours, $dotmin) = convertMinutesToHours($data->DOT);
+
+    $Total_OT+=$data->AfterExH;
 
     // Add rows to HTML table
     $html .= ' <tr>
@@ -139,16 +142,51 @@ foreach ($data_set as $data) {
                     <td style="font-size:10px;width:45px;">' . $hours . ':' . str_pad(abs($min), 2, '0', STR_PAD_LEFT) . '</td>
                 </tr>';
 }
-$html .= '</tbody>
-          </table>
-          <hr style="font-size: 11px; float: left; border-bottom: solid #000 1px;margin-left:100px;width: 650px;">
-        <br>
-            
 
-';
-$html .= '<div style="font-size:11px; font-weight:bold; text-align:left; margin-top:10px;margin-right:10px;">
+function covert_Only($minutes)
+{
+    $isNegative = $minutes < 0;
+    $minutes = abs($minutes);
+    $hours = intval($minutes / 60);
+    $min = $minutes % 60;
+
+    if ($isNegative) {
+        $hours = -$hours;  
+        $min = -$min;     
+    }
+
+    return [$hours, $min];
+}
+
+list($total_ot_hours, $total_ot_min) = convertMinutesToHours($Total_OT);
+
+$html .= '
+    </tbody>
+    </table>
+    <hr style="border: none; border-top: 1px solid #000; width: 700px; margin: 10px 0 10px 100px;">
+
+    <tr>
+        <td style="font-size:10px; width:70px;"></td>
+        <td style="font-size:10px; width:150px;"></td>
+        <td style="font-size:10px;width:65px;"></td>
+        <td style="font-size:10px;width:50px;"></td>
+        <td style="font-size:10px;width:65px;"></td> 
+        <td style="font-size:10px;width:60px;"></td>
+        <td style="font-size:10px;width:40px;"></td>
+        <td style="font-size:10px;width:40px;"></td>
+        <td style="font-size:10px;width:40px;"> </td>
+        <td style="font-size:10px;width:100px;">Total OT: ' . $total_ot_hours . ':' . str_pad(abs($total_ot_min), 2, '0', STR_PAD_LEFT) . '</td>
+    </tr>
+
+    <div style="width: 700px; margin: 0 0 0 100px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; font-size: 11px; font-weight: bold; line-height: 1; padding: 0;">
+        <div style="text-align: left; margin: 0; padding: 0;">
             Total Records: ' . $i . '
-          </div><br>';
+        </div>
+    </div>
+    <br>
+';
+
+
 
 // Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
