@@ -162,7 +162,7 @@ foreach ($chunks as $index => $chunk) {
         $Mint = $data->Normal_OT_Hrs;
                         $hours = floor($Mint / 60);
                         $min = $Mint - ($hours * 60);
-                        
+
         $grandTotalBalance += $data->Net_salary;
         $grandTotalRecords++;
 
@@ -224,11 +224,9 @@ foreach ($chunks as $index => $chunk) {
 
 $html .= '</div>';
 $html .= '
-    <hr style="border: none; border-top: 1px solid #000; width: 700px; margin: 10px 0 10px 100px;">
-
-    <table style="width:700px; margin-left:100px;">
-        <tr>
-            <td style="font-size:11px; font-weight:bold; text-align:right; padding:8px 0;">
+    <table cellpadding="3">
+        <tr style="border-bottom: 1px solid black; font-weight:bold">
+            <td style="font-size:11px; font-weight:bold; text-align:right;">
                 Grand Total Balance: ' . number_format($grandTotalBalance, 2, '.', ',') . '
             </td>
         </tr>
