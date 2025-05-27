@@ -41,7 +41,7 @@
 
                             <li class=""><a href="index.html">HOME</a></li>
                             <li class="active"><a href="index.html">SALARY ADVANCE</a></li>
-
+                        
                         </ol>
 
 
@@ -50,7 +50,7 @@
 
                                 <li class="active"><a data-toggle="tab" href="#tab1">SALARY ADVANCE</a></li>
                                 <li><a data-toggle="tab" href="#tab2">VIEW SALARY ADVANCE</a></li>
-
+                                <li><a data-toggle="tab" href="#tab3">DOWNLOADS</a></li>
                             </ul>
                         </div>
                         <div class="container-fluid">
@@ -330,10 +330,111 @@
 
                                 </div>
 
+                                  <div class="tab-pane" id="tab3">
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
 
 
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="panel panel-info">
+                                                        <div class="panel-heading">
+                                                            <h2>DOWNLOADS</h2>
+                                                        </div>
+                                                        <div class="panel-body">
+
+                                                            <div class="row">
+
+                                                                <div class="container mt-4">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 mb-12">
+                                                                            <div class="alert alert-info" role="alert">
+                                                                                Use the options below to add or update
+                                                                                Salary Advance details via an Excel
+                                                                                sheet.
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- Download Section -->
+                                                                        <div class="col-md-6 mb-4">
+                                                                            <form class="form-horizontal"
+                                                                                id="frm_designation_download"
+                                                                                name="frm_designation_download"
+                                                                                action="<?php echo base_url(); ?>Pay/Salary_Advance/download_salary_advance_report"
+                                                                                method="POST">
+                                                                                <div class="card">
+                                                                                    <div class="card-body">
+                                                                                        <h5 class="card-title">Download
+                                                                                            Excel File</h5>
+                                                                                        <p
+                                                                                            class="text-muted small mb-2">
+                                                                                            (Downloaded Format: .xlsx
+                                                                                            )</p>
+                                                                                        <button type="submit"
+                                                                                            name="search"
+                                                                                            formtarget="_blank"
+                                                                                            class="btn btn-success">
+                                                                                            <i
+                                                                                                class="fa fa-download"></i>
+                                                                                            Download
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+
+                                                                        <!-- Upload Section -->
+                                                                        <div class="col-md-6 mb-4">
+                                                                            <form class="form-horizontal"
+                                                                                id="frm_designation_upload"
+                                                                                name="frm_designation_upload"
+                                                                                action="<?php echo base_url(); ?>Pay/Salary_Increment/upload_salary_increment_report"
+                                                                                method="POST"
+                                                                                enctype="multipart/form-data">
+                                                                                <div class="card">
+                                                                                    <div class="card-body">
+                                                                                        <h5 class="card-title">Upload
+                                                                                            Excel File</h5>
+                                                                                        <p
+                                                                                            class="text-muted small mb-2">
+                                                                                            (Select Excel File: .xlsx
+                                                                                            only)</p>
+                                                                                        <div class="custom-file mb-2">
+                                                                                            <input type="file"
+                                                                                                class="custom-file-input"
+                                                                                                id="upload_excel"
+                                                                                                name="upload_excel"
+                                                                                                accept=".xlsx" required>
+
+                                                                                        </div>
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-primary"
+                                                                                            style="margin-top: 10px;">
+                                                                                            <i class="fa fa-upload"></i>
+                                                                                            Upload
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
 
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
 
                             </div>
 

@@ -1,6 +1,14 @@
 <?php
 
 defined('BASEPATH') or exit('No direct script access allowed');
+require 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+
 
 class Salary_Advance extends CI_Controller
 {
@@ -15,6 +23,7 @@ class Salary_Advance extends CI_Controller
          * Load Database model
          */
         $this->load->model('Db_model', '', TRUE);
+        $this->load->library("pdf_library");
     }
 
     /*
@@ -314,7 +323,7 @@ class Salary_Advance extends CI_Controller
 
     /*
      * Reject salary advance request
-     */
+    */
 
     public function reject($ID)
     {
@@ -339,4 +348,92 @@ class Salary_Advance extends CI_Controller
         }
         redirect(base_url() . "Pay/Salary_Advance");
     }
+
+    /*
+     * Create excell download report
+     */
+    public function download_salary_advance_report() {
+
+        $data['data_set'] = $this->Db_model->getfilteredData("SELECT
+                                                                id,
+                                                                EmpNo,
+                                                                Amount,
+                                                                Year,
+                                                                Month,
+                                                                Request_Date,
+                                                                Is_pending,
+                                                                Is_Approve,
+                                                                Is_Cancel,
+                                                                Approved_by,
+                                                                Approved_Timestamp,
+                                                                Is_Sup_AD_APP,
+                                                                Sup_AD_APP
+                                                                FROM tbl_salary_advance");
+        //var_dump($data['data_set']);die;
+
+        //create excell sheet
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        foreach (range('A', 'M') as $columID) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($columID)->setAutoSize(true);
+        }
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'EmpNo');
+        $sheet->setCellValue('C1', 'Amount');
+        $sheet->setCellValue('D1', 'Year');
+        $sheet->setCellValue('E1', 'Month');
+        $sheet->setCellValue('F1', 'Request_Date');
+        $sheet->setCellValue('G1', 'Is_pending');
+        $sheet->setCellValue('H1', 'Is_Approve');
+        $sheet->setCellValue('I1', 'Is_Cancel');
+        $sheet->setCellValue('J1', 'Approved_by');
+        $sheet->setCellValue('K1', 'Approved_Timestamp');
+        $sheet->setCellValue('L1', 'Is_Sup_AD_APP');
+        $sheet->setCellValue('M1', 'Sup_AD_APP');
+        $sheet->getStyle('A1:M1')->getFont()->setBold(true);
+
+         //check data exists or not
+         if (!empty($data['data_set'])) {
+                
+            $x = 2;
+
+            foreach ($data['data_set'] as $row) {
+
+                //set db value to columns
+                $sheet->setCellValue('A' . $x, $row->id);
+                $sheet->setCellValue('B' . $x, $row->EmpNo);
+                $sheet->setCellValue('C' . $x, $row->Amount);
+                $sheet->setCellValue('D' . $x, $row->Year);
+                $sheet->setCellValue('E' . $x, $row->Month);
+                $sheet->setCellValue('F' . $x, $row->Request_Date);
+                $sheet->setCellValue('G' . $x, $row->Is_pending);
+                $sheet->setCellValue('H' . $x, $row->Is_Approve);
+                $sheet->setCellValue('I' . $x, $row->Is_Cancel);
+                $sheet->setCellValue('J' . $x, $row->Approved_by);
+                $sheet->setCellValue('K' . $x, $row->Approved_Timestamp);
+                $sheet->setCellValue('L' . $x, $row->Is_Sup_AD_APP);
+                $sheet->setCellValue('M' . $x, $row->Sup_AD_APP);
+
+                $x++;
+            }
+            
+            
+
+            if (ob_get_contents()) ob_end_clean();
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="salary_advance_table.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+            exit;
+
+        } else {
+            $this->session->set_flashdata('error_message', 'No Data Found.');
+            redirect('/Pay/Salary_Advance');
+        }
+
+
+    }
+
 }

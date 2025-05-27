@@ -426,7 +426,7 @@
                                                                         <div class="col-md-12 mb-12">
                                                                             <div class="alert alert-info" role="alert">
                                                                                 Use the options below to add or update
-                                                                                Designation details via an Excel
+                                                                                Salary Increment details via an Excel
                                                                                 sheet.
                                                                             </div>
                                                                         </div>
