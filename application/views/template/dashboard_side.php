@@ -367,8 +367,8 @@ $User_Name = $currentUser[0]->Emp_Full_Name;
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_OT">OVER TIME REPORT</a></li>
                                 <?php endif; ?>
 
-                                <?php if ($currentUser[0]->absence_report == 2): ?>
-                                    <li><a href="form-wizard.html">ABSENCE REPORT</a></li>
+                                <?php if ($currentUser[0]->absence_report == 1): ?>
+                                    <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_Absent_Summary">ABSENT SUMMARY REPORT</a></li>
                                 <?php endif; ?>
 
                                 <!-- <?php if ($currentUser[0]->leave_report == 1): ?>
