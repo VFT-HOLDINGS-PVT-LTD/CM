@@ -100,22 +100,27 @@ class Report_Attendance_Absent_Summary extends CI_Controller {
 
 
         $data['data_set'] = $this->Db_model->getfilteredData("SELECT 
-                                                                    Emp.EmpNo,
-                                                                    Emp.Emp_Full_Name,
-                                                                    ua.AttDate
-                                                                    
-                                                                FROM
-                                                                    tbl_u_attendancedata ua
-                                                                        LEFT JOIN
-                                                                    tbl_empmaster Emp ON Emp.EmpNo = ua.Enroll_No
-                                                                        LEFT JOIN
-                                                                    tbl_designations dsg ON dsg.Des_ID = Emp.Des_ID
-                                                                        LEFT JOIN
-                                                                    tbl_departments dep ON dep.Dep_id = Emp.Dep_id
-                                                                    inner join
-                                                                    tbl_emp_group gr ON Emp.Grp_ID = gr.Grp_ID
-        
-                                                                    {$filter} AND Emp.EmpNo != '00009000';");
+                                                        Emp.EmpNo,
+                                                        Emp.Emp_Full_Name,
+                                                        ua.AttDate,
+                                                        CASE 
+                                                            WHEN ua.Enroll_No IS NOT NULL THEN 'Present'
+                                                            ELSE 'Absent'
+                                                        END AS Attendance_Status
+                                                    FROM tbl_empmaster Emp
+                                                    LEFT JOIN tbl_u_attendancedata ua 
+                                                        ON ua.Enroll_No = Emp.EmpNo
+                                                        AND ua.AttDate BETWEEN '{$from_date}' AND '{$to_date}'
+                                                    LEFT JOIN tbl_designations dsg 
+                                                        ON dsg.Des_ID = Emp.Des_ID
+                                                    LEFT JOIN tbl_departments dep 
+                                                        ON dep.Dep_id = Emp.Dep_id
+                                                    INNER JOIN tbl_emp_group gr 
+                                                        ON Emp.Grp_ID = gr.Grp_ID
+                                                    WHERE Emp.EmpNo != '00009000'
+                                                    AND Emp.Status = '1';
+                                                ");
+
 
         var_dump($data['data_set']);die;
 
