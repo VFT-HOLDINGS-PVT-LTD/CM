@@ -161,22 +161,22 @@ function covert_Only($minutes)
 list($total_ot_hours, $total_ot_min) = convertMinutesToHours($Total_OT);
 
 $html .= '
+    <tr>
+        <td style="font-size:10px; width:70px; border-top:1px solid #000; border-bottom:1px solid #000;">Total OT:</td>
+        <td style="font-size:10px; width:150px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:65px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:50px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:65px; border-top:1px solid #000; border-bottom:1px solid #000;"></td> 
+        <td style="font-size:10px; width:60px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:40px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:50px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:55px; border-top:1px solid #000; border-bottom:1px solid #000;"></td>
+        <td style="font-size:10px; width:45px; border-top:1px solid #000; border-bottom:1px solid #000;">
+        ' . $total_ot_hours . ':' . str_pad(abs($total_ot_min), 2, '0', STR_PAD_LEFT) . '
+        </td>
+    </tr>
     </tbody>
     </table>
-    <hr style="border: none; border-top: 1px solid #000; width: 700px; margin: 10px 0 10px 100px;">
-
-    <tr>
-        <td style="font-size:10px; width:70px;"></td>
-        <td style="font-size:10px; width:150px;"></td>
-        <td style="font-size:10px;width:65px;"></td>
-        <td style="font-size:10px;width:50px;"></td>
-        <td style="font-size:10px;width:65px;"></td> 
-        <td style="font-size:10px;width:60px;"></td>
-        <td style="font-size:10px;width:40px;"></td>
-        <td style="font-size:10px;width:40px;"></td>
-        <td style="font-size:10px;width:40px;"> </td>
-        <td style="font-size:10px;width:100px;">Total OT: ' . $total_ot_hours . ':' . str_pad(abs($total_ot_min), 2, '0', STR_PAD_LEFT) . '</td>
-    </tr>
 
     <div style="width: 700px; margin: 0 0 0 100px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; font-size: 11px; font-weight: bold; line-height: 1; padding: 0;">
         <div style="text-align: left; margin: 0; padding: 0;">
@@ -185,8 +185,6 @@ $html .= '
     </div>
     <br>
 ';
-
-
 
 // Print text using writeHTMLCell()
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
