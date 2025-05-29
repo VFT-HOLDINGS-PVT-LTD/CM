@@ -103,7 +103,7 @@ class Report_Attendance_Absent_Summary extends CI_Controller {
                                                             Emp.Emp_Full_Name,
                                                             ua.AttDate,
                                                             '{$date}' as date,
-                                                            'Absent' AS Attendance_Status
+                                                            'AB' AS Attendance_Status
                                                         FROM tbl_empmaster Emp
                                                         LEFT JOIN tbl_u_attendancedata ua 
                                                             ON ua.Enroll_No = Emp.EmpNo

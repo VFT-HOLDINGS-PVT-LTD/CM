@@ -90,7 +90,7 @@ foreach ($data_set as $data) {
     $html .= '<tr>
                 <td style="font-size:10px; width: 33.33%;">' . htmlspecialchars($data->EmpNo) . '</td>
                 <td style="font-size:10px; width: 33.33%;">' . htmlspecialchars($data->Emp_Full_Name) . '</td>
-                <td style="font-size:10px;margin-left: 10px; width: 33.33%;text-align: right;">' .
+                <td style="font-size:10px;margin-left: 10px; width: 33.33%;text-align: right;color:red;">' .
                     htmlspecialchars($data->Attendance_Status) . '</td>
               </tr>';
 }
