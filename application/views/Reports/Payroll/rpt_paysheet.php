@@ -225,17 +225,23 @@ foreach ($chunks as $index => $chunk) {
 $html .= '</div>';
 $html .= '
     <table cellpadding="3">
+         <tr style="border-bottom: 1px solid black; font-weight:bold">
+            <td style="font-size:11px; font-weight:bold; text-align:right;">
+            </td>
+        </tr>
+
         <tr style="border-bottom: 1px solid black; font-weight:bold">
             <td style="font-size:11px; font-weight:bold; text-align:right;">
                 Grand Total Balance: ' . number_format($grandTotalBalance, 2, '.', ',') . '
             </td>
         </tr>
-        <tr>
-            <td style="font-size:11px; font-weight:bold; text-align:left; padding:2px 0;">
-                Grand Total Records: ' . $grandTotalRecords . '
-            </td>
-        </tr>
+        <br>
     </table>
+         <br>
+        <div style="font-size:11px; font-weight:bold; text-align:left; padding:2px 0;">
+            Grand Total Records: ' . $grandTotalRecords . '
+        </div>
+
     <br>
 ';
 

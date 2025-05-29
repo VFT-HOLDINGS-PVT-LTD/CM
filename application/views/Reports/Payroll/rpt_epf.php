@@ -123,14 +123,29 @@ foreach ($data_set as $data) {
             </tr>';
 }
 
+$html .= '<tr>
+            <td style="font-size:10px;"></td>
+            <td style="font-size:10px;"></td>
+            <td style="font-size:11px;font-weight:bold;">&nbsp;</td>
+            <td style="font-size:10px;"></td>
+            <td style="font-size:10px;"></td>
+            <td style="font-size:11px;">&nbsp;</td> 
+            <td style="font-size:11px;">&nbsp;</td>       
+        </tr>';
+
 // Add sum row
 $html .= '<tr>
-        <td colspan="4" style="font-size:11px; font-weight:bold; text-align:right; border-top:1px solid #000;text-align:left">Total</td>
-        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_total_f_epf, 2, '.', ',') . '</td>
-        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_worker_amount, 2, '.', ',') . '</td>
-        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_employee_amount, 2, '.', ',') . '</td>
-        <td style="font-size:11px;border-top:1px solid #000;">' . number_format($sum_total_contribution, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:60;text-align:left;">TOTAL</td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:150;text-align:left;"></td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:50;text-align:left;"></td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:80px;text-align:left;"></td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:80px;text-align:left;">' . number_format($sum_total_f_epf, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:80;text-align:left;">' . number_format($sum_worker_amount, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:90px;text-align:left;">' . number_format($sum_employee_amount, 2, '.', ',') . '</td>
+        <td style="font-size:11px;border-bottom: 1px solid black;border-top: 1px solid black;width:90px;text-align:left;">' . number_format($sum_total_contribution, 2, '.', ',') . '</td>
     </tr>';
+
+
 
 $html .= '</tbody>
       </table>

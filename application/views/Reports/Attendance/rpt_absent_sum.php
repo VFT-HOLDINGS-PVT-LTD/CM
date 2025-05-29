@@ -84,8 +84,9 @@ $html = '
             </tr>
         </thead>
         <tbody>';
-
+$i = 0;
 foreach ($data_set as $data) {
+    $i++;
     $html .= '<tr>
                 <td style="font-size:10px; width: 33.33%;">' . htmlspecialchars($data->EmpNo) . '</td>
                 <td style="font-size:10px; width: 33.33%;">' . htmlspecialchars($data->Emp_Full_Name) . '</td>
@@ -96,9 +97,13 @@ foreach ($data_set as $data) {
 
 $html .= '
         </tbody>
-    </table>
-    <hr style="border: none; border-top: 1px solid #000; width: 700px; margin: 10px 0 10px 100px;">
-    <br>';
+        </table>
+        <br>
+        <div style="font-size:11px; font-weight:bold; text-align:left; margin-top:10px;margin-right:10px;">
+            Total Records: ' . $i . '
+        </div><br>';
+
+$html .= '';
 
 
 
