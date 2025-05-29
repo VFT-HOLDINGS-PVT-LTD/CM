@@ -107,24 +107,24 @@ class Report_Attendance_Absent_Summary extends CI_Controller {
                                                             WHEN ua.Enroll_No IS NOT NULL THEN 'Present'
                                                             ELSE 'Absent'
                                                         END AS Attendance_Status
-                                                    FROM tbl_empmaster Emp
-                                                    LEFT JOIN tbl_u_attendancedata ua 
-                                                        ON ua.Enroll_No = Emp.EmpNo
-                                                        AND ua.AttDate BETWEEN '{$from_date}' AND '{$to_date}'
-                                                    LEFT JOIN tbl_designations dsg 
-                                                        ON dsg.Des_ID = Emp.Des_ID
-                                                    LEFT JOIN tbl_departments dep 
-                                                        ON dep.Dep_id = Emp.Dep_id
-                                                    INNER JOIN tbl_emp_group gr 
-                                                        ON Emp.Grp_ID = gr.Grp_ID
-                                                    WHERE Emp.EmpNo != '00009000'
-                                                    AND Emp.Status = '1';
-                                                ");
+                                                        FROM tbl_empmaster Emp
+                                                        LEFT JOIN tbl_u_attendancedata ua 
+                                                            ON ua.Enroll_No = Emp.EmpNo
+                                                            AND ua.AttDate BETWEEN '{$from_date}' AND '{$to_date}'
+                                                        LEFT JOIN tbl_designations dsg 
+                                                            ON dsg.Des_ID = Emp.Des_ID
+                                                        LEFT JOIN tbl_departments dep 
+                                                            ON dep.Dep_id = Emp.Dep_id
+                                                        INNER JOIN tbl_emp_group gr 
+                                                            ON Emp.Grp_ID = gr.Grp_ID
+                                                        WHERE Emp.EmpNo != '00009000'
+                                                        AND Emp.Status = '1';
+                                                    ");
 
 
-        var_dump($data['data_set']);die;
+        // var_dump($data['data_set']);die;
 
-        $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
+        $this->load->view('Reports/Attendance/rpt_absent_sum', $data);
     }
 
 
