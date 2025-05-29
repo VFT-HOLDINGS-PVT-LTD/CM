@@ -42,24 +42,23 @@ class Report_Attendance_Absent_Summary extends CI_Controller {
         $emp_name = $this->input->post("txt_emp_name");
         $desig = $this->input->post("cmb_desig");
         $dept = $this->input->post("cmb_dep");
-        $from_date = $this->input->post("txt_from_date");
-        $to_date = $this->input->post("txt_to_date");
+        $date = $this->input->post("txt_from_date");
         $branch = $this->input->post("cmb_branch");
 
 
-        $data['f_date'] = $from_date;
-        $data['t_date'] = $to_date;
+        $data['date'] = $date;
 
         // Filter Data by categories
         $filter = '';
 
         if (($this->input->post("txt_from_date")) && ($this->input->post("txt_to_date"))) {
             if ($filter == '') {
-                $filter = " where  ua.AttDate between '$from_date' and '$to_date' AND Emp.Status = '1' ";
+                $filter = " where  ua.AttDate between '$date' and '$date' AND Emp.Status = '1' ";
             } else {
-                $filter .= " AND  ua.AttDate between '$from_date' and '$to_date'  AND Emp.Status = '1'";
+                $filter .= " AND  ua.AttDate between '$date' and '$date'  AND Emp.Status = '1'";
             }
         }
+
         if (($this->input->post("txt_emp"))) {
             if ($filter == null) {
                 $filter = " where Emp.EmpNo =$emp";
@@ -103,14 +102,15 @@ class Report_Attendance_Absent_Summary extends CI_Controller {
                                                         Emp.EmpNo,
                                                         Emp.Emp_Full_Name,
                                                         ua.AttDate,
+                                                        '{$date}' as date,
                                                         CASE 
                                                             WHEN ua.Enroll_No IS NOT NULL THEN 'Present'
-                                                            ELSE 'Absent'
+                                                            ELSE 'Absent'  
                                                         END AS Attendance_Status
                                                         FROM tbl_empmaster Emp
                                                         LEFT JOIN tbl_u_attendancedata ua 
                                                             ON ua.Enroll_No = Emp.EmpNo
-                                                            AND ua.AttDate BETWEEN '{$from_date}' AND '{$to_date}'
+                                                            AND ua.AttDate BETWEEN '{$date}' AND '{$date}'
                                                         LEFT JOIN tbl_designations dsg 
                                                             ON dsg.Des_ID = Emp.Des_ID
                                                         LEFT JOIN tbl_departments dep 

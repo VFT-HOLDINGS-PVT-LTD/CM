@@ -13,7 +13,7 @@ ini_set('memory_limit', '-1');
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('IN OUT Report' . $f_date . ' to ' . $t_date . '.pdf');
+$pdf->SetTitle('IN OUT Report' . $date . '.pdf');
 $pdf->SetSubject('TCPDF Tutorial');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
@@ -73,36 +73,33 @@ $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.0, 'depth_h' => 0.0,
 
 // Set some content to print
 $html = '
-        <div style="margin-left:200px; text-align:center; font-size:13px;">ATTENDANCE ABSENT SUMMARY REPORT</div>
-            <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">From Date:' . $f_date . ' &nbsp;- To Date : ' . $t_date . '</div></font><br>
-            <table cellpadding="3">
-                <thead style="border-bottom: #000 solid 1px;">
-                    <tr style="border-bottom: 1px solid black;"> 
-                        <th style="font-size:11px;border-bottom: 1px solid black; ">EMP NO</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;">EMP FULL NAME</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;">DATE</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;">ATTENDANCE STATUS</th>    
-                    </tr>
-                </thead>
-             <tbody>';
+    <div style="margin-left:200px; text-align:center; font-size:13px;">ATTENDANCE ABSENT SUMMARY REPORT</div>
+    <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">Date:' . $date . '</div><br>
+    <table cellpadding="3" style="width: 100%; border-collapse: collapse;">
+        <thead style="border-bottom: #000 solid 1px;">
+            <tr style="border-bottom: 1px solid black;"> 
+                <th style="font-size:11px; border-bottom: 1px solid black; width: 33.33%;">EMP NO</th>
+                <th style="font-size:11px; border-bottom: 1px solid black; width: 33.33%;">EMP FULL NAME</th>
+                <th style="font-size:11px; border-bottom: 1px solid black; width: 33.33%;text-align: right;">ATTENDANCE STATUS</th>    
+            </tr>
+        </thead>
+        <tbody>';
 
 foreach ($data_set as $data) {
-
-    // Add rows to HTML table
-    $html .= ' <tr>
-                    <td style="font-size:10px; ">' . htmlspecialchars($data->EmpNo) . '</td>
-                    <td style="font-size:10px;">' . htmlspecialchars($data->Emp_Full_Name) . '</td>
-                    <td style="font-size:10px;">' . htmlspecialchars($data->AttDate) . '</td>
-                    <td style="font-size:10px;">' . htmlspecialchars($data->Attendance_Status) . '</td>
-                </tr>';
+    $html .= '<tr>
+                <td style="font-size:10px; width: 33.33%;">' . htmlspecialchars($data->EmpNo) . '</td>
+                <td style="font-size:10px; width: 33.33%;">' . htmlspecialchars($data->Emp_Full_Name) . '</td>
+                <td style="font-size:10px;margin-left: 10px; width: 33.33%;text-align: right;">' .
+                    htmlspecialchars($data->Attendance_Status) . '</td>
+              </tr>';
 }
 
 $html .= '
-    </tbody>
+        </tbody>
     </table>
     <hr style="border: none; border-top: 1px solid #000; width: 700px; margin: 10px 0 10px 100px;">
-    <br>
-';
+    <br>';
+
 
 
 
@@ -112,7 +109,7 @@ $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 // ---------------------------------------------------------    
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-$pdf->Output('IN OUT Report' . $f_date . ' to ' . $t_date . '.pdf', 'I');
+$pdf->Output('IN OUT Report' . $date, 'I');
 
 //============================================================+
     // END OF FILE

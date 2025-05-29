@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--Description of dashboard page
 
-@authorAshan Rathsara-->
+@authorAshanRathsara-->
 
 <html lang="en">
 
@@ -193,33 +193,12 @@
                                                                 <div class="form-group col-md-6">
                                                                     <div class="form-group col-sm-6">
                                                                         <label for="focusedinput"
-                                                                            class="col-sm-4 control-label">From
-                                                                            Date</label>
+                                                                            class="col-sm-4 control-label">Date</label>
                                                                         <div class="col-sm-8">
-
-
                                                                             <input type="text" class="form-control"
                                                                                 required="" id="dpd1"
                                                                                 name="txt_from_date"
                                                                                 placeholder="Select Date">
-
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div class="form-group col-sm-6" style="">
-                                                                        <label for="focusedinput"
-                                                                            class="col-sm-4 control-label">To
-                                                                            Date</label>
-                                                                        <div class="col-sm-8">
-
-
-                                                                            <input type="text" class="form-control"
-                                                                                required="" id="dpd2" name="txt_to_date"
-                                                                                placeholder="Select Date">
-
-
                                                                         </div>
 
                                                                     </div>
