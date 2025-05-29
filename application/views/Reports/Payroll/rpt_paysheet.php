@@ -103,6 +103,7 @@ $html = '
 
 $chunks = array_chunk($data_set, 13);
 $grandTotalBalance = 0;
+$grandTotalGrossSalary=0;
 $grandTotalRecords = 0;
 
 foreach ($chunks as $index => $chunk) {
@@ -166,6 +167,10 @@ foreach ($chunks as $index => $chunk) {
         $grandTotalBalance += $data->Net_salary;
         $grandTotalRecords++;
 
+        $grandTotalGrossSalary+=$data->Gross_sal;
+        $grandTotalGrossSalary++;
+
+
         $html .= '<tr>
             <td style="width:50px;">' . $data->EmpNo . '</td>                      
             <td style="width:150px;">' . $data->Emp_Full_Name . '</td>                       
@@ -223,21 +228,35 @@ foreach ($chunks as $index => $chunk) {
 }
 
 $html .= '</div>';
-$html .= '
-    <table cellpadding="3">
-         <tr style="border-bottom: 1px solid black; font-weight:bold">
-            <td style="font-size:11px; font-weight:bold; text-align:right;">
-            </td>
-        </tr>
 
-        <tr style="border-bottom: 1px solid black; font-weight:bold">
-            <td style="font-size:11px; font-weight:bold; text-align:right;">
-                Grand Total Balance: ' . number_format($grandTotalBalance, 2, '.', ',') . '
-            </td>
-        </tr>
-        <br>
-    </table>
-         <br>
+$html .= '<table><tr>
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;">Total:</td>                      
+    <td style="width:150px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>                       
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:65px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:65px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:45px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:60px;font-weight:bold;border-top: 1px solid black; border-bottom: 1px solid black;">' . number_format($grandTotalGrossSalary, 2, '.', ',') . '</td>
+    <td style="width:40px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:55px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:55px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:60px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:60px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>                       
+    <td style="width:60px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:55px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:60px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>
+    <td style="width:50px;border-top: 1px solid black; border-bottom: 1px solid black;"></td>                        
+    <td style="width:60px;font-weight:bold;border-top: 1px solid black; border-bottom: 1px solid black;">' . number_format($grandTotalBalance, 2, '.', ',') . '</td>                                                     
+</tr></table>';
+
+
+
+$html .= '
+    <br>
         <div style="font-size:11px; font-weight:bold; text-align:left; padding:2px 0;">
             Grand Total Records: ' . $grandTotalRecords . '
         </div>
