@@ -94,6 +94,11 @@ foreach ($data_set as $data) {
                     htmlspecialchars($data->Attendance_Status) . '</td>
               </tr>';
 }
+$html .= '<tr>
+            <td style="font-size:10px; width: 33.33%; border-top: 1px solid #000; border-bottom: 1px solid #000;">Total Absent:</td>
+            <td style="font-size:10px; width: 33.33%; border-top: 1px solid #000; border-bottom: 1px solid #000;"></td>
+            <td style="font-size:10px; margin-left: 10px; width: 33.33%; text-align: right; border-top: 1px solid #000; border-bottom: 1px solid #000;">'.$i.'</td>
+        </tr>';
 
 $html .= '
         </tbody>
@@ -103,7 +108,7 @@ $html .= '
             Total Records: ' . $i . '
         </div><br>';
 
-$html .= '';
+
 
 
 

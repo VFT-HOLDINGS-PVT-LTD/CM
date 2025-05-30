@@ -73,28 +73,6 @@
                                                                 <div class="form-group col-md-12">
                                                                     <div class="form-group col-sm-3">
                                                                         <label for="focusedinput"
-                                                                            class="col-sm-4 control-label">Emp
-                                                                            No</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" class="form-control"
-                                                                                name="txt_emp" id="txt_emp"
-                                                                                placeholder="Ex: 0001">
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="form-group col-sm-3">
-                                                                        <label for="focusedinput"
-                                                                            class="col-sm-4 control-label">Emp
-                                                                            Name</label>
-                                                                        <div class="col-sm-8">
-                                                                            <input type="text" class="form-control"
-                                                                                name="txt_emp_name" id="txt_emp_name"
-                                                                                placeholder="Ex: Ashan">
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <div class="form-group col-sm-3">
-                                                                        <label for="focusedinput"
                                                                             class="col-sm-4 control-label">Designation</label>
                                                                         <div class="col-sm-8">
                                                                             <select class="form-control" id="cmb_desig"
