@@ -38,7 +38,7 @@ ON
 GROUP BY 
     tbl_u_attendancedata.Enroll_No, AttDate
 ORDER BY 
-    AttDate DESC;
+    AttDate DESC,tbl_u_attendancedata.Enroll_No ASC;
 ');
         $this->load->view('Attendance/Attendance_Row_Data/index', $data);
     }

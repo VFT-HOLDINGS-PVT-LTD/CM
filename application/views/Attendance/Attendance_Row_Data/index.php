@@ -136,7 +136,7 @@
 
         <!-- Load site level scripts -->
 
-        <?php $this->load->view('template/js.php'); ?> <!-- Initialize scripts for this page-->
+        <?php $this->load->view('template/js1.php'); ?> <!-- Initialize scripts for this page-->
 
         <!-- End loading page level scripts-->
 
@@ -144,16 +144,37 @@
         <script src="<?php echo base_url(); ?>system_js/Master/Designation.js"></script>
         <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> -->
         <script>
-            if ($.fn.DataTable.isDataTable('#example')) {
-                $('#example').DataTable().destroy();
-            }
+    $(document).ready(function () {
+        // Safely destroy if already initialized
+        if ($.fn.DataTable.isDataTable('#example')) {
+            $('#example').DataTable().clear().destroy();
+        }
 
-            $('#example').DataTable({
-                "order": [
-                    [0, "desc"]
-                ] // descending order by DATE
-            });
-        </script>
+        // Now initialize with your settings
+        $('#example').DataTable({
+            "order": [[0, "desc"]],
+            "language": {
+                "lengthMenu": "_MENU_"
+            },
+            "initComplete": function () {
+                // Run styling/integration AFTER init
+                $('.dataTables_filter input').attr('placeholder', 'Search...');
+                $('.panel-ctrls')
+                    .append($('.dataTables_filter').addClass("pull-right"))
+                    .find("label").addClass("panel-ctrls-center");
+
+                $('.panel-ctrls').append("<i class='separator'></i>");
+
+                $('.panel-ctrls')
+                    .append($('.dataTables_length').addClass("pull-left"))
+                    .find("label").addClass("panel-ctrls-center");
+
+                $('.panel-footer').append($(".dataTable + .row"));
+                $('.dataTables_paginate > ul.pagination').addClass("pull-right m0");
+            }
+        });
+    });
+</script>
 
 </body>
 
