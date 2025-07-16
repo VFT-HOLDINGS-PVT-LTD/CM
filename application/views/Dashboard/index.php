@@ -540,19 +540,19 @@ $currentUser
                                             </div>
                                         <?php endif; ?>
 
-                                        <?php if ($currentUser[0]->dsh_rpt_leave == 1): ?>
-                                            <div class="col-md-2">
-                                                <a href="<?php echo base_url(); ?>Reports/Attendance/Report_Leave" class="shortcut-tile tile-success">
-                                                    <div class="tile-body">
-                                                        <div class="pull-left"><i class="fa fa-newspaper-o"></i></div>
+                                        <!--<?php if ($currentUser[0]->dsh_rpt_leave == 1): ?>-->
+                                        <!--    <div class="col-md-2">-->
+                                        <!--        <a href="<?php echo base_url(); ?>Reports/Attendance/Report_Leave" class="shortcut-tile tile-success">-->
+                                        <!--            <div class="tile-body">-->
+                                        <!--                <div class="pull-left"><i class="fa fa-newspaper-o"></i></div>-->
 
-                                                    </div>
-                                                    <div class="tile-footer">
-                                                        LEAVE REPORT
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
+                                        <!--            </div>-->
+                                        <!--            <div class="tile-footer">-->
+                                        <!--                LEAVE REPORT-->
+                                        <!--            </div>-->
+                                        <!--        </a>-->
+                                        <!--    </div>-->
+                                        <!--<?php endif; ?>-->
 
                                         <?php if ($currentUser[0]->dsh_rpt_emp_master == 1): ?>
                                             <div class="col-md-2">

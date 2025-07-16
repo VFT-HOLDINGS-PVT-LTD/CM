@@ -123,7 +123,7 @@ $Notifications = $result ['Notifications'];
     </span>
 
     <!--<a class="navbar-brand" href="<?php echo base_url(); ?>Dashboard">HRMS</a>-->
-    <img style="width: 50px;" src="<?php echo base_url(); ?>assets/images/company/VTF-Logo.png"><a style="font-size: 20px; margin-top: 150px; color: #000; "  href="<?php echo base_url(); ?>Dashboard">CM INTERNATIONAL PAYROLL SYSTEM</a>
+    <img style="width: 50px;" src="<?php echo base_url(); ?>assets/images/company/company_logo_1742565179.jpg"><a style="font-size: 20px; margin-top: 150px; color: #000; "  href="<?php echo base_url(); ?>Dashboard">CM INTERNATIONAL PAYROLL SYSTEM</a>
     <!--<a class="marquee"> TODAY BIRTHDAYS :</a>-->
 <!--    <div class="">
         <div class="marqu" style="">

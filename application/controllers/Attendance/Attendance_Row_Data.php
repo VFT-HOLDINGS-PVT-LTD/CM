@@ -38,7 +38,11 @@ ON
 GROUP BY 
     tbl_u_attendancedata.Enroll_No, AttDate
 ORDER BY 
+<<<<<<< Updated upstream
     AttDate ASC;
+=======
+    AttDate DESC;
+>>>>>>> Stashed changes
 ');
         $this->load->view('Attendance/Attendance_Row_Data/index', $data);
     }

@@ -278,11 +278,11 @@ class Attendance_Manual_Entry extends CI_Controller
             $inTimeExcel = Date::PHPToExcel(new DateTime($row->InTime));
             $outTimeExcel = Date::PHPToExcel(new DateTime($row->OutTime));
 
-            
+            // Set values in the respective cells
             $sheet->setCellValue('D' . $x, $inTimeExcel);
             $sheet->setCellValue('E' . $x, $outTimeExcel);
 
-            
+            // Apply Excel time format (HH:MM:SS)
             $sheet->getStyle('D' . $x)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_TIME3);
             $sheet->getStyle('E' . $x)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_TIME3);
 
@@ -298,7 +298,7 @@ class Attendance_Manual_Entry extends CI_Controller
         $writer = new Xlsx($spreadsheet);
         $filename = 'Cm_international_miss_punch.xlsx';
 
-        
+        // Ensure no output before headers
         ob_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
@@ -338,7 +338,7 @@ class Attendance_Manual_Entry extends CI_Controller
     function upload_sample()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
+            ////call this function heare
             $upload_status = $this->uploadDoc();
             if ($upload_status != false) {
                 $inputFileName = 'assets/uploads/imports/' . $upload_status;
@@ -362,7 +362,7 @@ class Attendance_Manual_Entry extends CI_Controller
                     if (is_numeric($Missing_time)) {
                         $formatted_time = Date::excelToDateTimeObject($Missing_time)->format('H:i:s');
                     } else {
-                        $formatted_time = $Missing_time; 
+                        $formatted_time = $Missing_time; // Keep as is if not a numeric value
                     }
                     // echo $formatted_time;
                     // echo "<br/>";

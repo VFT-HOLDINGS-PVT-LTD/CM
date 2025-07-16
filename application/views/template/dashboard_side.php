@@ -65,7 +65,7 @@ $User_Name = $currentUser[0]->Emp_Full_Name;
                                 <!--<?php endif; ?>-->
 
                                 <?php if ($currentUser[0]->user_level == 1): ?>
-                                    <li><a href="<?php echo base_url(); ?>Master/User_Level/">USER LEVELS</a></li>
+                                    <li><a href="<?php echo base_url(); ?>Master/User_Levels/">USER LEVELS</a></li>
                                 <?php endif; ?>
 
                                 <?php if ($currentUser[0]->leave_types == 1): ?>
@@ -258,7 +258,7 @@ $User_Name = $currentUser[0]->Emp_Full_Name;
                                     <li><a href="<?php echo base_url(); ?>Pay/Payroll_Process">PAYROLL PROCESS</a></li>
                                 <?php endif; ?>
 
-                                <?php if ($currentUser[0]->payroll_process == 1): ?>
+                                <?php if ($currentUser[0]->payroll_initialize == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Pay/Payroll_Process_Init">PAYROLL INITIALIZE</a></li>
                                 <?php endif; ?>
                                 <?php if ($currentUser[0]->payroll_process == 1): ?>

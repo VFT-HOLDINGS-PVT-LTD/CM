@@ -65,7 +65,7 @@ $html = '
             <table cellpadding="3">
                 <thead style="border-bottom: #000 solid 1px;">
                     <tr style="border-bottom: 1px solid black; font-weight:bold"> 
-                        <th style="font-size:11px;border-bottom: 1px solid black; width:60px;">EMP NO</th>
+                        <th style="font-size:11px;border-bottom: 1px solid black; width:80px;">EMP NO</th>
                         <th style="font-size:11px;border-bottom: 1px solid black; width:200px;">FULL NAME</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;width:75px;">NIC</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;width:250px;">ADDRESS</th>
@@ -83,7 +83,7 @@ $html = '
 foreach ($data_set as $data) {
 
     $html .= ' <tr>
-                    <td  style="font-size:10px; width:60px;">' . $data->EmpNo . '</td>
+                    <td  style="font-size:10px; width:80px;">' . $data->EmpNo . '</td>
                     <td style="font-size:10px; width:200px;">' . $data->Title . ' ' . $data->Emp_Full_Name . '</td>
                     <td style="font-size:10px;width:75px;">' . $data->NIC . '</td>
                     <td style="font-size:10px;width:250px;">' . $data->Address . '</td>

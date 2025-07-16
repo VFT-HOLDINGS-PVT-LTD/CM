@@ -79,7 +79,7 @@
                             <?php
                             $permissions = [
                                 "Dashboard", "master_data", "designation", "department",
-                                "holiday_types", "holidays", "shifts",
+                                "holiday_types", "holidays", "shifts", "weekly_roster",
                                 "user_level", "leave_types", "banks", "bank_accounts",
                                 "payees", "loan_types", "allowance_types", "deduction_types",
                                 "branches", "employee_groups", "Employee_mgt", "add_employee",
@@ -89,7 +89,7 @@
                                 "view_lv_balance", "leave_allocation", "leave_approve", "leave_app_sup",
                                 "leave_entry", "leave_request", "leave_adj", "Payroll",
                                 "allowance", "deduction", "loan_entry", "salary_increment",
-                                "salary_advance", "request_advance", "approve_advance", "payroll_process",
+                                "salary_advance", "request_advance", "approve_advance", "payroll_process", "payroll_initialize",
                                 "Cheque", "write_cheque", "view_cheque", "Messages",
                                 "send_message", "view_message", "company", "company_profile",
                                 "Reports", "Master_Reports", "employee_report", "designation_report",

@@ -121,7 +121,7 @@ class Payroll_Approve extends CI_Controller
             // Decode the JSON string into a PHP array
             $data = json_decode($postData, true);
 
-            $ID = $data['rowData'][0];
+            $ID = $data['rowData'][1];
 
             // Check if a row with the given ID exists in tbl_salary_edited
             $edit_salary = $this->Db_model->getfilteredData("SELECT * FROM tbl_salary_edited WHERE tbl_salary_edited.ID = '$ID'");
@@ -176,7 +176,7 @@ class Payroll_Approve extends CI_Controller
             // Decode the JSON string into a PHP array
             $data = json_decode($postData, true);
 
-            $ID = $data['rowData'][0];
+            $ID = $data['rowData'][1];
 
             // Check if a row with the given ID exists in tbl_salary_edited
             $edit_salary = $this->Db_model->getfilteredData("SELECT * FROM tbl_salary_edited WHERE tbl_salary_edited.ID = '$ID'");
@@ -337,13 +337,15 @@ class Payroll_Approve extends CI_Controller
         }
 
         // SQL query to fetch filtered data
-        $sql = "SELECT * FROM tbl_salary_edited 
+        $sql = "SELECT tbl_salary_edited.* FROM tbl_salary_edited 
                 INNER JOIN tbl_empmaster 
                 ON tbl_salary_edited.EmpNo = tbl_empmaster.EmpNo 
                 $filter AND tbl_empmaster.EmpNo != '00009000' AND tbl_salary_edited.Edited = '1' ";
 
         // Call model to execute the query and get filtered data
         $data = $this->Db_model->getfilteredData($sql);
+        
+        // die(print_r($data));
 
         // echo json_encode($sql); // Send the data as JSON
 
@@ -354,7 +356,72 @@ class Payroll_Approve extends CI_Controller
             echo json_encode(["status" => "No data found"]);  // Send a "No data found" status if no results are returned
         }
     }
+public function approveAll()
+    {
+        $ids = $this->input->post('ids');
 
+        // echo json_encode($ids);
+
+        if (!empty($ids)) {
+            foreach ($ids as $ID) {
+
+                $edit_salary = $this->Db_model->getfilteredData("SELECT * FROM tbl_salary_edited WHERE tbl_salary_edited.ID = '$ID'");
+                // echo $ID;
+
+                if (!empty($edit_salary)) {
+                    $update_sl_id = $edit_salary[0]->Salary_t_id;
+                    // Prepare data array for updating tbl_salary
+                    $dataArray = array(
+                        'Incentive' => $edit_salary[0]->Incentive,
+                        'Risk_allowance_I' => $edit_salary[0]->Risk_allowance_I,
+                        'Attendances_II' => $edit_salary[0]->Attendances_II,
+                        'Colombo' => $edit_salary[0]->Colombo,
+                        'Gross_sal' => $edit_salary[0]->Gross_sal,
+                        'Bank_Accounts' => $edit_salary[0]->Bank_Accounts,
+                        'Foods' => $edit_salary[0]->Foods,
+                        'Past_deficit' => $edit_salary[0]->Past_deficit,
+                        'Detentions' => $edit_salary[0]->Detentions,
+                        'Bonus' => $edit_salary[0]->Bonus,
+                        'tot_deduction' => $edit_salary[0]->tot_deduction,
+                        'Net_salary' => $edit_salary[0]->Net_salary,
+                        'Edited' => 1,
+                        'Approved' => 1,
+                    );
+
+                    // Update the existing row in tbl_salary
+                    $whereArray = array("ID" => $update_sl_id);
+                    $result = $this->Db_model->updateData("tbl_salary", $dataArray, $whereArray);
+
+                    $dataArray_1 = array(
+                        'Edited' => 0,
+                    );
+                    $whereArray_1 = array("ID" => $ID);
+                    $result = $this->Db_model->updateData("tbl_salary_edited", $dataArray_1, $whereArray_1);
+
+                    if ($result) {
+                        echo json_encode([
+                            'status' => 'success',
+                            'message' => 'Row updated successfully',
+                        ]);
+
+                    } else {
+                        echo json_encode([
+                            'status' => 'error',
+                            'message' => 'Failed to update row'
+                        ]);
+                    }
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'No matching record found in tbl_salary_edited'
+                    ]);
+                }
+            }
+            // Redirect or give a success message
+            $this->session->set_flashdata('success_message', 'Approved successfully');
+            redirect(base_url() . "Pay/Payroll_Approve");
+        }
+    }
     public function get_details()
     {
         $id = $this->input->post('id');
