@@ -337,7 +337,7 @@ class Payroll_Approve extends CI_Controller
         }
 
         // SQL query to fetch filtered data
-        $sql = "SELECT tbl_salary_edited.* FROM tbl_salary_edited 
+        $sql = "SELECT tbl_salary_edited.*,tbl_empmaster.Emp_Full_Name FROM tbl_salary_edited 
                 INNER JOIN tbl_empmaster 
                 ON tbl_salary_edited.EmpNo = tbl_empmaster.EmpNo 
                 $filter AND tbl_empmaster.EmpNo != '00009000' AND tbl_salary_edited.Edited = '1' ";
