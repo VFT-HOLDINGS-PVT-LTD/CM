@@ -2,6 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 require 'vendor/autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -320,6 +321,28 @@ class Salary_Advance extends CI_Controller
         $this->session->set_flashdata('success_message', 'Salary Advance Approved successfully');
         redirect(base_url() . "Pay/Salary_Advance");
     }
+    public function approveAll()
+    {
+        $ids = $this->input->post('ids');
+
+        // echo json_encode($ids);
+        $currentUser = $this->session->userdata('login_user');
+        $Emp = $currentUser[0]->EmpNo;
+        if (!empty($ids)) {
+            foreach ($ids as $ID) {
+                $data = array(
+                    'Is_pending' => 0,
+                    'Is_Approve' => 1,
+                    'Approved_by' => $Emp,
+                );
+
+                $whereArr = array("id" => $ID);
+                $result = $this->Db_model->updateData("tbl_salary_advance", $data, $whereArr);
+            }
+        }
+        $this->session->set_flashdata('success_message', 'Salary Advance Approved successfully');
+        redirect(base_url() . "Pay/Salary_Advance");
+    }
 
     /*
      * Reject salary advance request
@@ -343,7 +366,7 @@ class Salary_Advance extends CI_Controller
             $where = 'id';
             $this->Db_model->delete_by_id($ID, $where, $table);
             $this->session->set_flashdata('success_message', 'Salary Advance Rejected');
-        }else{
+        } else {
             $this->session->set_flashdata('error_message', 'You Cannot Delete this Salary Advance');
         }
         redirect(base_url() . "Pay/Salary_Advance");
@@ -352,7 +375,8 @@ class Salary_Advance extends CI_Controller
     /*
      * Create excell download report
      */
-    public function download_salary_advance_report() {
+    public function download_salary_advance_report()
+    {
 
         $data['data_set'] = $this->Db_model->getfilteredData("SELECT
                                                                 id,
@@ -384,18 +408,11 @@ class Salary_Advance extends CI_Controller
         $sheet->setCellValue('D1', 'Year');
         $sheet->setCellValue('E1', 'Month');
         $sheet->setCellValue('F1', 'Request_Date');
-        $sheet->setCellValue('G1', 'Is_pending');
-        $sheet->setCellValue('H1', 'Is_Approve');
-        $sheet->setCellValue('I1', 'Is_Cancel');
-        $sheet->setCellValue('J1', 'Approved_by');
-        $sheet->setCellValue('K1', 'Approved_Timestamp');
-        $sheet->setCellValue('L1', 'Is_Sup_AD_APP');
-        $sheet->setCellValue('M1', 'Sup_AD_APP');
-        $sheet->getStyle('A1:M1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:F1')->getFont()->setBold(true);
 
-         //check data exists or not
-         if (!empty($data['data_set'])) {
-                
+        //check data exists or not
+        if (!empty($data['data_set'])) {
+
             $x = 2;
 
             foreach ($data['data_set'] as $row) {
@@ -407,18 +424,11 @@ class Salary_Advance extends CI_Controller
                 $sheet->setCellValue('D' . $x, $row->Year);
                 $sheet->setCellValue('E' . $x, $row->Month);
                 $sheet->setCellValue('F' . $x, $row->Request_Date);
-                $sheet->setCellValue('G' . $x, $row->Is_pending);
-                $sheet->setCellValue('H' . $x, $row->Is_Approve);
-                $sheet->setCellValue('I' . $x, $row->Is_Cancel);
-                $sheet->setCellValue('J' . $x, $row->Approved_by);
-                $sheet->setCellValue('K' . $x, $row->Approved_Timestamp);
-                $sheet->setCellValue('L' . $x, $row->Is_Sup_AD_APP);
-                $sheet->setCellValue('M' . $x, $row->Sup_AD_APP);
 
                 $x++;
             }
-            
-            
+
+
 
             if (ob_get_contents()) ob_end_clean();
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -427,16 +437,18 @@ class Salary_Advance extends CI_Controller
             $writer = new Xlsx($spreadsheet);
             $writer->save('php://output');
             exit;
-
         } else {
-            $this->session->set_flashdata('error_message', 'No Data Found.');
-            redirect('/Pay/Salary_Advance');
+            if (ob_get_contents()) ob_end_clean();
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="salary_advance_table.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+            exit;
         }
-
-
     }
 
-     function uploadDoc()
+    function uploadDoc()
     {
         ////excel file upload
         $uploadPath = 'assets/uploads/imports/';
@@ -459,7 +471,7 @@ class Salary_Advance extends CI_Controller
             return false;
         }
     }
-    
+
     function upload_salary_advance_report()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -468,7 +480,7 @@ class Salary_Advance extends CI_Controller
             $upload_status = $this->uploadDoc();
 
             if ($upload_status != false) {
-                
+
                 $inputFileName = 'assets/uploads/imports/' . $upload_status;
                 $inputTileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
                 $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputTileType);
@@ -487,17 +499,11 @@ class Salary_Advance extends CI_Controller
                     $Amount = $spreadsheet->getActiveSheet()->getCell('C' . $row->getRowIndex())->getValue();
                     $Year = $spreadsheet->getActiveSheet()->getCell('D' . $row->getRowIndex())->getValue();
                     $Month = $spreadsheet->getActiveSheet()->getCell('E' . $row->getRowIndex())->getValue();
-                   
-                    $Is_pending = $spreadsheet->getActiveSheet()->getCell('G' . $row->getRowIndex())->getValue();
-                    $Is_Approve = $spreadsheet->getActiveSheet()->getCell('H' . $row->getRowIndex())->getValue();
-                    $Is_Cancel = $spreadsheet->getActiveSheet()->getCell('I' . $row->getRowIndex())->getValue();
-                    $Approved_by = $spreadsheet->getActiveSheet()->getCell('J' . $row->getRowIndex())->getValue();
-                    
-                    $Is_Sup_AD_APP = $spreadsheet->getActiveSheet()->getCell('L' . $row->getRowIndex())->getValue();
-                    $Sup_AD_APP = $spreadsheet->getActiveSheet()->getCell('M' . $row->getRowIndex())->getValue();
+
+
 
                     $Request_Date = $spreadsheet->getActiveSheet()->getCell('F' . $row->getRowIndex())->getValue();
-                    
+
                     // Convert Excel serial date (e.g., "45996") or "12/5/2025" to "Y-m-d" format for Request_Date
                     if (is_numeric($Request_Date)) {
                         // Excel serial date to PHP date
@@ -527,26 +533,25 @@ class Salary_Advance extends CI_Controller
                     } else {
                         $Approved_Timestamp = '0000-00-00';
                     }
-                    
+
 
                     $data = array(
-                        'id' => $id,
                         'EmpNo' => $EmpNo,
                         'Amount' => $Amount,
                         'Year' => $Year,
                         'Month' => $Month,
                         'Request_Date' => $Request_Date,
-                        'Is_pending' => $Is_pending,
-                        'Is_Approve' => $Is_Approve,
-                        'Is_Cancel' => $Is_Cancel,
-                        'Approved_by' => $Approved_by,
-                        'Approved_Timestamp' =>$Approved_Timestamp,
-                        'Is_Sup_AD_APP' => $Is_Sup_AD_APP,
-                        'Sup_AD_APP' => $Sup_AD_APP,
+                        'Is_pending' => 1,
+                        'Is_Approve' => 0,
+                        'Is_Cancel' => 0,
+                        'Approved_by' => 9000,
+                        'Approved_Timestamp' => $Approved_Timestamp,
+                        'Is_Sup_AD_APP' => 0,
+                        'Sup_AD_APP' => 0,
                     );
                     // var_dump($data);die;
 
-                    $HasRow = $this->Db_model->getfilteredData("SELECT id FROM tbl_salary_advance WHERE id = '$id' ");
+                    $HasRow = $this->Db_model->getfilteredData("SELECT id FROM tbl_salary_advance WHERE EmpNo = '$EmpNo' AND Year = '$Year' AND Month = '$Month' ");
                     if (!empty($HasRow[0]->id)) {
                         $this->db->where('id', $HasRow[0]->id);
                         $this->db->update('tbl_salary_advance', $data);
@@ -566,5 +571,4 @@ class Salary_Advance extends CI_Controller
             redirect(base_url() . "Pay/Salary_Advance");
         }
     }
-
 }

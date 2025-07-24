@@ -395,8 +395,13 @@ FROM
             $writer->save('php://output');
             exit;
         } else {
-            $this->session->set_flashdata('error_message', 'No Data Found.');
-            redirect(base_url() . "Pay/Salary_Increment");
+            if (ob_get_contents()) ob_end_clean();
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="salary_increment_table.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+            exit;
         }
     }
 

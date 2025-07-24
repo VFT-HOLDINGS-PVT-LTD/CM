@@ -118,9 +118,9 @@ class View_Employees extends CI_Controller {
 
         if (($this->input->post("cmb_branch"))) {
             if ($filter == null) {
-                $filter = " where tbl_empmaster.B_id = '$branch'";
+                $filter = " where tbl_empmaster.Grp_ID = '$branch'";
             } else {
-                $filter .= " AND tbl_empmaster.B_id = '$branch'";
+                $filter .= " AND tbl_empmaster.Grp_ID = '$branch'";
             }
         }
 

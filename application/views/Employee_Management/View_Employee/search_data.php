@@ -31,14 +31,14 @@
                     foreach ($data_set as $data) {
 
 
-//                        var_dump($data_set);
+                        //                        var_dump($data_set);
 
                         if ($data->status == '1') {
                             $IsActive = 'Active';
                         } else {
                             $IsActive = 'Inactive';
                         }
-                        ?>
+                    ?>
 
                         <tr class='odd gradeX'>
 
@@ -58,24 +58,26 @@
 
 
                             <td width='15'>
-            <!--////                                                                                    echo "<a class='action_comp' data-toggle='modal' data-target='#myModal' data-id='$data->EmpNo' href='" . base_url() . "index.php/Action_Complain/complain_details" . $data->EmpNo . "'><i class='fa fa-edit'></i></a>";-->
+                                <!--////                                                                                    echo "<a class='action_comp' data-toggle='modal' data-target='#myModal' data-id='$data->EmpNo' href='" . base_url() . "index.php/Action_Complain/complain_details" . $data->EmpNo . "'><i class='fa fa-edit'></i></a>";-->
                                 <a class='get_data' formtarget='_new' href="<?php echo base_url(); ?>assets/images/Employees/<?php echo $data->Image ?>" data-rel="popup"> <img style='width: 60px; height: 60px;' src="<?php echo base_url(); ?>assets/images/Employees/<?php echo $data->Image ?>" </a>
                             </td>
-                            <!--//-->                
+                            <!--//-->
                             <td width='15'>
-            <!--//                                                                                    echo "<a class='action_comp' data-toggle='modal' data-target='#myModal' data-id='$data->EmpNo' href='" . base_url() . "index.php/Action_Complain/complain_details" . $data->EmpNo . "'><i class='fa fa-edit'></i></a>";-->
+                                <!--//                                                                                    echo "<a class='action_comp' data-toggle='modal' data-target='#myModal' data-id='$data->EmpNo' href='" . base_url() . "index.php/Action_Complain/complain_details" . $data->EmpNo . "'><i class='fa fa-edit'></i></a>";-->
                                 <a class='get_data btn btn-green' href='<?php echo base_url(); ?>Employee_Management/Edit_Employees/edit/<?php echo $data->EmpNo ?>'> <i class='fa fa-edit'></i> </a>
                             </td>
-            <!--//                                                                                        echo "<td width='15'>";
+                            <!--//                                                                                        echo "<td width='15'>";
             //                                                                                        echo "<a href='".base_url()."index.php/Designation/view".$data->B_Code."'><i class='icon-eye-open'></i></a>";
             //                                                                                        echo  "</td>";-->
                         </tr>
                     <?php } ?>
                 </tbody>
+                <?php
+                $total_records = count($data_set);
+                echo "<div style='padding: 10px; font-weight: bold;'>Total Records: {$total_records}</div>";
+                ?>
             </table>
             <!--<div class="panel-footer"></div>-->
         </div>
     </div>
 </div>
-
-

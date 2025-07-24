@@ -73,7 +73,7 @@ $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.0, 'depth_h' => 0.0,
 
 // Set some content to print
 $html = '
-        <div style="margin-left:200px; text-align:center; font-size:13px;">IN OUT REPORT</div>
+        <div style="margin-left:200px; text-align:center; font-size:13px;">ATTENDANCE SUMMERY REPORT</div>
             <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">From Date:' . $f_date . ' &nbsp;- To Date : ' . $t_date . '</div></font><br>
             <table cellpadding="3">
                 <thead style="border-bottom: #000 solid 1px;">
@@ -192,7 +192,7 @@ $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 // ---------------------------------------------------------    
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-$pdf->Output('IN OUT Report' . $f_date . ' to ' . $t_date . '.pdf', 'I');
+$pdf->Output('Attendance Summery Report' . $f_date . ' to ' . $t_date . '.pdf', 'I');
 
 //============================================================+
     // END OF FILE

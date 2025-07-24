@@ -1,10 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Employee_Report extends CI_Controller {
+class Employee_Report extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         if (!($this->session->userdata('login_user'))) {
             redirect(base_url() . "");
@@ -21,16 +23,19 @@ class Employee_Report extends CI_Controller {
      * Index page in Departmrnt
      */
 
-    public function index() {
+    public function index()
+    {
 
         $data['title'] = "Employee All Report | HRM System";
         $data['data_dep'] = $this->Db_model->getData('Dep_ID,Dep_Name', 'tbl_departments');
         $data['data_desig'] = $this->Db_model->getData('Des_ID,Desig_Name', 'tbl_designations');
+        $data['data_grp'] = $this->Db_model->getData('Grp_ID,EmpGroupName', 'tbl_emp_group');
         $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
         $this->load->view('Reports/Master/Report_Employee_All', $data);
     }
 
-    public function Report_employee_all() {
+    public function Report_employee_all()
+    {
 
         $Data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
 
@@ -38,6 +43,7 @@ class Employee_Report extends CI_Controller {
         $emp_name = $this->input->post("txt_emp_name");
         $desig = $this->input->post("cmb_desig");
         $dept = $this->input->post("cmb_dep");
+        $group = $this->input->post("cmb_group");
         $comp = $this->input->post("cmb_comp");
         $nic = $this->input->post("txt_nic");
         $gender = $this->input->post("cmb_gender");
@@ -47,22 +53,29 @@ class Employee_Report extends CI_Controller {
         if ($status == 2) {
             $status = 0;
         }
-        if($emp_type==1){
-            $emp_type=1;
-        }else if($emp_type==2){
-            $emp_type=2;
+        if ($emp_type == 1) {
+            $emp_type = 1;
+        } else if ($emp_type == 2) {
+            $emp_type = 2;
         }
 
 
 
         // Filter Data by categories
-        $filter = '';
+        $filter = "WHERE tbl_empmaster.EmpNo != '9000'";
 
         if (($this->input->post("txt_emp"))) {
             if ($filter == null) {
                 $filter = " where EmpNo like '$emp%'";
             } else {
                 $filter .= " AND EmpNo like '$emp%'";
+            }
+        }
+        if (($this->input->post("cmb_group"))) {
+            if ($filter == '') {
+                $filter = " where Grp_ID = $group";
+            } else {
+                $filter .= " AND Grp_ID = $group";
             }
         }
 
@@ -103,7 +116,7 @@ class Employee_Report extends CI_Controller {
             }
         }
 
-         if (($this->input->post("cmd_emp_type"))) {
+        if (($this->input->post("cmd_emp_type"))) {
             if ($filter == '') {
                 $filter = " where EMP_ST_ID = $emp_type";
             } else {
@@ -144,5 +157,4 @@ class Employee_Report extends CI_Controller {
 
         $this->load->view('Reports/Master/rpt_employee_all', $Data);
     }
-
 }

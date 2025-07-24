@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 
@@ -10,9 +11,12 @@ if (!empty($data_set)) {
     <div class="panel panel-primary">
         <div class="panel panel-default">
             <div class="panel-body panel-no-padding">
+                <button type="button" class='get_data btn btn-primary'
+                                                        onclick="handleApproveAll()">Approve All Selected</button>
                 <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" id="select-all"></th>
                             <th>ID</th>
                             <th>EMP NO</th>
                             <th>NAME</th>
@@ -35,6 +39,7 @@ if (!empty($data_set)) {
 
 
                             echo "<tr class='odd gradeX'>";
+                            echo "<td width='100'><input type='checkbox' class='select-item' value=". $data->id ."></td>";
                             echo "<td width='100'>" . $data->id . "</td>";
                             echo "<td width='100'>" . $data->EmpNo . "</td>";
                             echo "<td width='100'>" . $data->Emp_Full_Name . "</td>";
@@ -179,4 +184,39 @@ if (!empty($data_set)) {
             });
 
     }
+
+    document.getElementById('select-all').addEventListener('click', function() {
+            var checkboxes = document.querySelectorAll('.select-item');
+            for (var checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        });
+     function handleApproveAll() {
+            var selected = [];
+            var checkboxes = document.querySelectorAll('.select-item:checked');
+            for (var checkbox of checkboxes) {
+                selected.push(checkbox.value);
+            }
+
+            if (selected.length > 0) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '<?php echo base_url(); ?>Pay/Salary_Advance/approveAll';
+
+                for (var id of selected) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'ids[]';
+                    input.value = id;
+                    form.appendChild(input);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+                alert('Approved successfully');
+                // window.location = "<?php echo base_url(); ?>Pay/Payroll_Approve";
+            } else {
+                alert('No leave requests selected');
+            }
+        }
 </script>
